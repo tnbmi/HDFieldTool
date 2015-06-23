@@ -62,9 +62,9 @@ HRESULT CInputKeyboard::Init(HINSTANCE instance, HWND wnd)
 	HRESULT_FUNC(CInput::Init(instance, wnd))
 
 	// デバイスの生成
-	if(FAILED(m_input->CreateDevice(GUID_SysKeyboard, &m_inputDevice, NULL)))
+	if(FAILED(m_input->CreateDevice(GUID_SysKeyboard, &m_inputDevice, nullptr)))
 	{
-		MessageBox(NULL, "デバイスが生成できませんでした", "エラー", (MB_OK | MB_ICONERROR));
+		MessageBox(nullptr, "デバイスが生成できませんでした", "エラー", (MB_OK | MB_ICONERROR));
 		return E_FAIL;
 	}
 
@@ -74,14 +74,14 @@ HRESULT CInputKeyboard::Init(HINSTANCE instance, HWND wnd)
 	// データフォーマット
 	if(FAILED(m_inputDevice->SetDataFormat(&c_dfDIKeyboard)))
 	{
-		MessageBox(NULL, "データフォーマットを設定できませんでした", "エラー", (MB_OK | MB_ICONERROR));
+		MessageBox(nullptr, "データフォーマットを設定できませんでした", "エラー", (MB_OK | MB_ICONERROR));
 		return E_FAIL;
 	}
 
 	// 協調モード
 	if(FAILED(m_inputDevice->SetCooperativeLevel(wnd, (DISCL_FOREGROUND | DISCL_NONEXCLUSIVE))))
 	{
-		MessageBox(NULL, "協調モードを設定できませんでした", "エラー", (MB_OK | MB_ICONERROR));
+		MessageBox(nullptr, "協調モードを設定できませんでした", "エラー", (MB_OK | MB_ICONERROR));
 		return E_FAIL;
 	}
 
@@ -102,11 +102,11 @@ void CInputKeyboard::Uninit(void)
 	CInput::Uninit();
 
 	// アクセス権開放
-	if(m_inputDevice != NULL)
+	if(m_inputDevice != nullptr)
 	{
 		m_inputDevice->Unacquire();
 		m_inputDevice->Release();
-		m_inputDevice = NULL;
+		m_inputDevice = nullptr;
 	}
 }
 

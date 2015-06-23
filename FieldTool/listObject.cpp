@@ -96,10 +96,10 @@ void CListObject::UnlinkObj(CScene* obj)
 void CListObject::LinkUpdate(CScene* obj)
 {
 	// 先頭チェック
-	if(m_updateTop == NULL)
+	if(m_updateTop == nullptr)
 	{
 		m_updateTop = obj;
-		obj->SetUpdatePrev(NULL);
+		obj->SetUpdatePrev(nullptr);
 	}
 	else
 	{
@@ -109,7 +109,7 @@ void CListObject::LinkUpdate(CScene* obj)
 	}
 
 	// 次オブジェクト初期化
-	obj->SetUpdateNext(NULL);
+	obj->SetUpdateNext(nullptr);
 	// 終端アドレス設定
 	m_updateCur = obj;
 }
@@ -122,7 +122,7 @@ void CListObject::UnlinkUpdate(CScene* obj)
 	CScene* prev = obj->GetUpdatePrev();
 	CScene* next = obj->GetUpdateNext();
 
-	if(prev != NULL)
+	if(prev != nullptr)
 	{
 		prev->SetUpdateNext(next);
 	}
@@ -130,13 +130,13 @@ void CListObject::UnlinkUpdate(CScene* obj)
 	{
 		m_updateTop = next;
 
-		if(m_updateTop != NULL)
+		if(m_updateTop != nullptr)
 		{
-			m_updateTop->SetUpdatePrev(NULL);
+			m_updateTop->SetUpdatePrev(nullptr);
 		}
 	}
 
-	if(next != NULL)
+	if(next != nullptr)
 	{
 		next->SetUpdatePrev(prev);
 	}
@@ -144,9 +144,9 @@ void CListObject::UnlinkUpdate(CScene* obj)
 	{
 		m_updateCur = prev;
 
-		if(m_updateTop != NULL)
+		if(m_updateTop != nullptr)
 		{
-			m_updateCur->SetUpdateNext(NULL);
+			m_updateCur->SetUpdateNext(nullptr);
 		}
 	}
 }
@@ -157,10 +157,10 @@ void CListObject::UnlinkUpdate(CScene* obj)
 void CListObject::LinkDraw(CScene* obj, int priority)
 {
 	// 先頭チェック
-	if(m_drawTop[priority] == NULL)
+	if(m_drawTop[priority] == nullptr)
 	{
 		m_drawTop[priority] = obj;
-		obj->SetDrawPrev(NULL);
+		obj->SetDrawPrev(nullptr);
 	}
 	else
 	{
@@ -170,7 +170,7 @@ void CListObject::LinkDraw(CScene* obj, int priority)
 	}
 
 	// 次オブジェクト初期化
-	obj->SetDrawNext(NULL);
+	obj->SetDrawNext(nullptr);
 	// 終端アドレス設定
 	m_drawCur[priority] = obj;
 }
@@ -184,7 +184,7 @@ void CListObject::UnlinkDraw(CScene* obj)
 	CScene* next = obj->GetDrawNext();
 	int priority = obj->GetPriority();
 
-	if(prev != NULL)
+	if(prev != nullptr)
 	{
 		prev->SetDrawNext(next);
 	}
@@ -192,13 +192,13 @@ void CListObject::UnlinkDraw(CScene* obj)
 	{
 		m_drawTop[priority] = next;
 
-		if(m_drawTop[priority] != NULL)
+		if(m_drawTop[priority] != nullptr)
 		{
-			m_drawTop[priority]->SetDrawPrev(NULL);
+			m_drawTop[priority]->SetDrawPrev(nullptr);
 		}
 	}
 
-	if(next != NULL)
+	if(next != nullptr)
 	{
 		next->SetDrawPrev(prev);
 	}
@@ -206,9 +206,9 @@ void CListObject::UnlinkDraw(CScene* obj)
 	{
 		m_drawCur[priority] = prev;
 
-		if(m_drawTop[priority] != NULL)
+		if(m_drawTop[priority] != nullptr)
 		{
-			m_drawCur[priority]->SetDrawNext(NULL);
+			m_drawCur[priority]->SetDrawNext(nullptr);
 		}
 	}
 }

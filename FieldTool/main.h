@@ -62,14 +62,13 @@
 // 分岐マクロ
 //----------------------------
 #define HRESULT_FUNC(func)	if(FAILED(func)){return E_FAIL;}	// 関数のHRESULTリターン
-#define HRESULT_POINTER(p)	if(p==NULL){return E_FAIL;}			// NULLのHRESULTリターン
+#define HRESULT_POINTER(p)	if(p==nullptr){return E_FAIL;}			// nullptrのHRESULTリターン
 
-#define SAFE_RELEASE(p)		 if(p!=NULL){p->Release(); p=NULL;}				// 開放保護
-#define SAFE_DELETE(p)		 if(p!=NULL){delete p; p=NULL;}					// 破棄保護
-#define SAFE_DELETE_ARRAY(p) if(p!=NULL){delete[] p; p=NULL;}				// 配列破棄保護
-#define SAFE_UNINIT(p)		 if(p!=NULL){p->Uninit(); p=NULL;}				// 終了保護
-#define SAFE_END(p)			 if(p!=NULL){p->Uninit(); delete p; p=NULL;}	// 最終保護
-
+#define SAFE_RELEASE(p)		 if(p!=nullptr){p->Release(); p=nullptr;}			// 開放保護
+#define SAFE_DELETE(p)		 if(p!=nullptr){delete p; p=nullptr;}				// 破棄保護
+#define SAFE_DELETE_ARRAY(p) if(p!=nullptr){delete[] p; p=nullptr;}				// 配列破棄保護
+#define SAFE_UNINIT(p)		 if(p!=nullptr){p->Uninit(); p=nullptr;}			// 終了保護
+#define SAFE_END(p)			 if(p!=nullptr){p->Uninit(); delete p; p=nullptr;}	// 最終保護
 
 //----------------------------
 // その他共通マクロ

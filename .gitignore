@@ -1,0 +1,8 @@
+#ƒQ[ƒ€“à•”
+FieldTool/Debug/
+FieldTool/Release/
+FieldTool/ipch/
+FieldTool/*.pdb
+FieldTool/*.sdf
+FieldTool/*.suo
+FieldTool/*.vcxproj.user

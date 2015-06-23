@@ -36,7 +36,8 @@ public:
 	void	Update(void);
 	void	Draw(void);
 
-	void	CalculateFPS(DWORD frameCnt, DWORD curTime, DWORD FPSLastTime);
+	void	 CalculateFPS(DWORD frameCnt, DWORD curTime, DWORD FPSLastTime);
+	CImport* GetImport(void){return m_import;}
 
 	static void SetNextPhase(CPhase* phase){m_phaseNext = phase;}
 	static HWND GetWindowHandle(){ return m_window_handle; }

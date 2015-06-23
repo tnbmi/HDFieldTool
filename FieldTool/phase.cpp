@@ -13,7 +13,6 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ê√ìIïœêî
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-CFade*			CPhase::m_fade		= NULL;
-CInputKeyboard*	CPhase::m_keyboard	= NULL;
-CInputMouse*	CPhase::m_mouse		= NULL;
-CInputPadX*		CPhase::m_padX		= NULL;
+CFade*			CPhase::m_fade		= nullptr;
+CInputKeyboard*	CPhase::m_keyboard	= nullptr;
+CInputMouse*	CPhase::m_mouse		= nullptr;

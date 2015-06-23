@@ -15,9 +15,7 @@
 #include "import.h"
 
 #include "phase.h"
-#include "title.h"
-#include "game.h"
-#include "result.h"
+#include "create.h"
 
 #include "inputKeyboard.h"
 
@@ -27,8 +25,8 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 静的変数
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-CPhase* CManager::m_phaseNext = NULL;
-HWND	CManager::m_window_handle = NULL;
+CPhase* CManager::m_phaseNext = nullptr;
+HWND	CManager::m_window_handle = nullptr;
 
 //=============================================================================
 // コンストラクタ
@@ -88,7 +86,7 @@ HRESULT CManager::Init(HINSTANCE instance, HWND wnd, bool window)
 	//----------------------------
 	// フェーズ
 	//----------------------------
-	m_phase = (CPhase*)new CTitle;
+	m_phase = (CPhase*)new CCreate;
 	m_phase->Init(device);
 	m_phase->SetKeyboard(m_keyboard);
 
@@ -160,7 +158,7 @@ void CManager::Update(void)
 	//----------------------------
 	// フェーズ
 	//----------------------------
-	if(m_phase != NULL)
+	if(m_phase != nullptr)
 	{
 		m_phase->Update();
 	}
@@ -193,7 +191,7 @@ void CManager::Draw(void)
 	//----------------------------
 	// フェーズ
 	//----------------------------
-	if(m_phase != NULL)
+	if(m_phase != nullptr)
 	{
 		m_phase->Draw();
 	}

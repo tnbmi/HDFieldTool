@@ -36,10 +36,10 @@ CScene::CScene(int priority, OBJTYPE objType)
 	m_objType = objType;
 
 	// 先頭チェック
-	if(m_top[m_priority] == NULL)
+	if(m_top[m_priority] == nullptr)
 	{
 		m_top[m_priority] = this;
-		m_prev = NULL;
+		m_prev = nullptr;
 	}
 	else
 	{
@@ -49,7 +49,7 @@ CScene::CScene(int priority, OBJTYPE objType)
 	}
 
 	// 次オブジェクト初期化
-	m_next = NULL;
+	m_next = nullptr;
 
 	// 終端アドレス設定
 	m_cur[m_priority] = this;
@@ -98,7 +98,7 @@ void CScene::UnLinkScene(void)
 	//----------------------------
 	// シーンリストから破棄
 	//----------------------------
-	if(m_prev != NULL)
+	if(m_prev != nullptr)
 	{
 		m_prev->m_next = m_next;
 	}
@@ -106,13 +106,13 @@ void CScene::UnLinkScene(void)
 	{
 		m_top[m_priority] = m_next;
 
-		if(m_top[m_priority] != NULL)
+		if(m_top[m_priority] != nullptr)
 		{
-			m_top[m_priority]->m_prev = NULL;
+			m_top[m_priority]->m_prev = nullptr;
 		}
 	}
 
-	if(m_next != NULL)
+	if(m_next != nullptr)
 	{
 		m_next->m_prev = m_prev;
 	}
@@ -120,9 +120,9 @@ void CScene::UnLinkScene(void)
 	{
 		m_cur[m_priority] = m_prev;
 
-		if(m_top[m_priority] != NULL)
+		if(m_top[m_priority] != nullptr)
 		{
-			m_cur[m_priority]->m_next = NULL;
+			m_cur[m_priority]->m_next = nullptr;
 		}
 	}
 

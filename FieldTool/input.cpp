@@ -24,11 +24,11 @@ HRESULT CInput::Init(HINSTANCE instance, HWND wnd)
 	//----------------------------
 	// DirectInputオブジェクト生成
 	//----------------------------
-	if(m_input == NULL)
+	if(m_input == nullptr)
 	{
-		if(FAILED(DirectInput8Create(instance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_input, NULL)))
+		if(FAILED(DirectInput8Create(instance, DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&m_input, nullptr)))
 		{
-			MessageBox(NULL, "オブジェクトが生成できませんでした", "エラー", (MB_OK | MB_ICONERROR));
+			MessageBox(nullptr, "オブジェクトが生成できませんでした", "エラー", (MB_OK | MB_ICONERROR));
 			return E_FAIL;
 		}
 	}

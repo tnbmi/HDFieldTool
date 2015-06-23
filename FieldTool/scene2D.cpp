@@ -21,8 +21,8 @@
 CScene2D::CScene2D(int priority, OBJTYPE objType) : CScene(priority, objType)
 {
 	m_localTex	= false;
-	m_texture	= NULL;
-	m_vtxBuff	= NULL;
+	m_texture	= nullptr;
+	m_vtxBuff	= nullptr;
 
 	m_rot	= 0.0f;
 	m_pos	= D3DXVECTOR2(0.0f, 0.0f);
@@ -80,7 +80,7 @@ HRESULT CScene2D::Init(LPDIRECT3DDEVICE9 device, CImport::TEXTURES texture, POIN
 											  FVF_VERTEX_2D,
 											  D3DPOOL_MANAGED,
 											  &m_vtxBuff,
-											  NULL))
+											  nullptr))
 
 	// 頂点情報設定
 	SetVertexPolygon();
@@ -113,7 +113,7 @@ HRESULT CScene2D::Init(LPDIRECT3DDEVICE9 device, const char* texture, POINT_TYPE
 											  FVF_VERTEX_2D,			// 頂点フォーマット
 											  D3DPOOL_MANAGED,
 											  &m_vtxBuff,				// 頂点情報
-											  NULL))
+											  nullptr))
 
 	// 頂点情報設定
 	SetVertexPolygon();

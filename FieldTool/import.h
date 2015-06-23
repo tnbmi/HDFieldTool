@@ -24,33 +24,22 @@ public:
 	{
 		NONE = 0,
 
-		// システム
-		FADE,
-		VERSION,
-
-		// ロゴ
-		TITLELOGO,
-
 		// 空
-		TEX_SKY_BG,
-		TEX_SKY1,
-		TEX_SKY2,
-		TEX_SKY3,
-		TEX_SKY4,
-		TEX_SKY5,
+		SKY1,
+		SKY2,
+		SKY3,
+		SKY4,
+		SKY5,
 
 		// 森
-		DIRT,
 		FOREST_01,
 
 		// 町
-		ASPHALT,
 		TOWN_01,
 
-		// ゴール
-		GOAL_OFF,
-		GOAL_ON,
-		GOAL_CLEAR,
+		// 道
+		DIRT,
+		ASPHALT,
 
 		// 障害物
 		SIGNBOARD,
@@ -63,17 +52,18 @@ public:
 		DUSTBOX,
 		BARRICADE,
 
+		// ターゲット
+		GOAL_OFF,
+
 		// プレイヤー
 		PLAYER_WAIT,
 		PLAYER_ATTACK,
 		PLAYER_LIGHT,
-		PLAYER_GOODMOOD,
-		PLAYER_BADMOOD,
 
 		// 乗り物
 		ASSY_TRAM,
 
-		TEX_MAX
+		TEX_MAX,
 	} TEXTURES;
 
 	CImport();
@@ -85,8 +75,16 @@ public:
 
 	static LPDIRECT3DTEXTURE9 GetTexture(TEXTURES tex){return m_tex[tex];}
 
+	void SetComboBgCategory(HWND wnd, int id);
+	void SetComboBgType(HWND wnd, int id, int category);
+	void SetComboObjCategory(HWND wnd, int id);
+	void SetComboObjType(HWND wnd, int id, int category);
+
 private:
-	static LPDIRECT3DTEXTURE9 m_tex[TEX_MAX];;
+	static LPDIRECT3DTEXTURE9 m_tex[TEX_MAX];
+
+	int m_categoryBg;
+	int m_categoryObj;
 };
 
 //=============================================================================

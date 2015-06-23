@@ -166,7 +166,7 @@ void CRenderer::Draw(void)
 	if(SUCCEEDED(m_device->BeginScene()))	//開始
 	{
 		// バックバッファ＆Ｚバッファのクリア
-		m_device->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(100, 100, 100, 256), 1.0f, 0);
+		m_device->Clear(0, nullptr, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_RGBA(100, 100, 100, 256), 1.0f, 0);
 
 		// オブジェクト
 		CListObject::Draw();
@@ -179,5 +179,5 @@ void CRenderer::Draw(void)
 	}
 
 	// バックバッファとフロントバッファの入れ替え
-	m_device->Present(NULL, NULL, NULL, NULL);
+	m_device->Present(nullptr, nullptr, nullptr, nullptr);
 }

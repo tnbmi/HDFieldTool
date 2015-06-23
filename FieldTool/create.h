@@ -1,12 +1,12 @@
 //*****************************************************************************
 //
-// CResultクラス [result.h]
+// CCreateクラス [game.h]
 // Author :MAI TANABE
 //
 //*****************************************************************************
 
-#ifndef _MY_RESULT_H
-#define _MY_RESULT_H
+#ifndef _MY_GAME_H
+#define _MY_GAME_H
 //=============================================================================
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -16,34 +16,44 @@
 #include "phase.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+// マクロ定義
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // クラス定義
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+class CPlayer;
+class CSky;
+class CBackground;
 class CScene2D;
+class CGoal;
 
-class CResult : CPhase
+class CCreate : CPhase
 {
 public:
-	CResult(void){isWin=true;};
-	~CResult(){};
+	CCreate(void){};
+	~CCreate(){};
 
 	HRESULT	Init(LPDIRECT3DDEVICE9 device);
 	void	Uninit(void);
 	void	Update(void);
 	void	Draw(void);
 
-	//リザルトがクリアかどうかの判定(リザルト生成時に必ずやることやらないとクリアになる)
-	//第一引数:勝利フラグ(trueならクリア画面falseならゲームオーバー画面)
-	void	SetisWin(bool value)
-	{
-		isWin=value;
-	}
-
 private:
 	void InitObject(LPDIRECT3DDEVICE9 device);
+	void Debug(void);
+
+	//プレイヤー制御
+	CPlayer *m_player;
+
+	// 背景
+	CSky*		 m_sky;
+	CBackground* m_bg;
 
 	CScene2D* m_version;
 
-	bool isWin;
+	// ゴール(大井川 6/2_12時頃追加)
+	CGoal *m_Goal;
 };
 
 //=============================================================================

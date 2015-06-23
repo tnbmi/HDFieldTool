@@ -20,7 +20,6 @@
 class CFade;
 class CInputKeyboard;
 class CInputMouse;
-class CInputPadX;
 
 class CPhase
 {
@@ -37,7 +36,6 @@ public:
 
 	void SetKeyboard(CInputKeyboard* keyboard){m_keyboard = keyboard;}
 	void SetMouse(CInputMouse* mouse){m_mouse = mouse;}
-	void SetPadX(CInputPadX* padX){m_padX = padX;}
 
 protected:
 	LPDIRECT3DDEVICE9 m_device;	// Deviceオブジェクト(デバイスへのポインタ)
@@ -46,7 +44,6 @@ protected:
 
 	static CInputKeyboard*	m_keyboard;
 	static CInputMouse*		m_mouse;
-	static CInputPadX*		m_padX;
 };
 
 //=============================================================================

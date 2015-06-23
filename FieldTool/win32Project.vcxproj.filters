@@ -59,20 +59,14 @@
     <Filter Include="renderer">
       <UniqueIdentifier>{c06ec4af-a36a-4cd4-94d7-62357f0ad206}</UniqueIdentifier>
     </Filter>
-    <Filter Include="phase\title">
-      <UniqueIdentifier>{5e3cd453-2316-47f9-9aeb-76894786af4d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="phase\game">
-      <UniqueIdentifier>{680737bd-da8b-40b5-9d93-f804936e2705}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="phase\result">
-      <UniqueIdentifier>{bdd2949b-a2d5-4f1f-ae41-d9aad6dd0b07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="phase\fade">
-      <UniqueIdentifier>{1c035479-3a31-42ca-b7e7-9e290b48fe0d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="object\particle">
       <UniqueIdentifier>{b5d34b13-69e6-49ff-9a06-ed2fa9da34bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="phase\create">
+      <UniqueIdentifier>{680737bd-da8b-40b5-9d93-f804936e2705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="phase\game">
+      <UniqueIdentifier>{fc633cb9-6c6a-43da-b6ff-29ee1c5742a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -83,9 +77,6 @@
       <Filter>input</Filter>
     </ClCompile>
     <ClCompile Include="inputKeyboard.cpp">
-      <Filter>input</Filter>
-    </ClCompile>
-    <ClCompile Include="inputPadX.cpp">
       <Filter>input</Filter>
     </ClCompile>
     <ClCompile Include="scene.cpp">
@@ -100,26 +91,8 @@
     <ClCompile Include="import.cpp">
       <Filter>import</Filter>
     </ClCompile>
-    <ClCompile Include="character_player.cpp">
-      <Filter>object\character\player\character_player</Filter>
-    </ClCompile>
-    <ClCompile Include="stumbler.cpp">
-      <Filter>object\stumbler</Filter>
-    </ClCompile>
-    <ClCompile Include="inputPadDirect.cpp">
-      <Filter>input</Filter>
-    </ClCompile>
-    <ClCompile Include="character_vehicle.cpp">
-      <Filter>object\character\player\character_vehicle</Filter>
-    </ClCompile>
-    <ClCompile Include="math_animation.cpp">
-      <Filter>object\character</Filter>
-    </ClCompile>
     <ClCompile Include="background.cpp">
       <Filter>object\background</Filter>
-    </ClCompile>
-    <ClCompile Include="goal.cpp">
-      <Filter>object\goal</Filter>
     </ClCompile>
     <ClCompile Include="sky.cpp">
       <Filter>object\sky</Filter>
@@ -133,20 +106,11 @@
     <ClCompile Include="renderer.cpp">
       <Filter>renderer</Filter>
     </ClCompile>
-    <ClCompile Include="title.cpp">
-      <Filter>phase\title</Filter>
-    </ClCompile>
-    <ClCompile Include="game.cpp">
-      <Filter>phase\game</Filter>
-    </ClCompile>
-    <ClCompile Include="result.cpp">
-      <Filter>phase\result</Filter>
-    </ClCompile>
     <ClCompile Include="phase.cpp">
       <Filter>phase</Filter>
     </ClCompile>
-    <ClCompile Include="fade.cpp">
-      <Filter>phase\fade</Filter>
+    <ClCompile Include="create.cpp">
+      <Filter>phase\create</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,9 +121,6 @@
       <Filter>input</Filter>
     </ClInclude>
     <ClInclude Include="inputKeyboard.h">
-      <Filter>input</Filter>
-    </ClInclude>
-    <ClInclude Include="inputPadX.h">
       <Filter>input</Filter>
     </ClInclude>
     <ClInclude Include="scene.h">
@@ -174,32 +135,8 @@
     <ClInclude Include="import.h">
       <Filter>import</Filter>
     </ClInclude>
-    <ClInclude Include="character_player.h">
-      <Filter>object\character\player\character_player</Filter>
-    </ClInclude>
-    <ClInclude Include="stumbler.h">
-      <Filter>object\stumbler</Filter>
-    </ClInclude>
-    <ClInclude Include="inputPadDirect.h">
-      <Filter>input</Filter>
-    </ClInclude>
-    <ClInclude Include="player_config.h">
-      <Filter>object\character\player\character_player</Filter>
-    </ClInclude>
-    <ClInclude Include="character_vehicle.h">
-      <Filter>object\character\player\character_vehicle</Filter>
-    </ClInclude>
-    <ClInclude Include="math_animation.h">
-      <Filter>object\character</Filter>
-    </ClInclude>
-    <ClInclude Include="vehicle_config.h">
-      <Filter>object\character\player\character_vehicle</Filter>
-    </ClInclude>
     <ClInclude Include="background.h">
       <Filter>object\background</Filter>
-    </ClInclude>
-    <ClInclude Include="goal.h">
-      <Filter>object\goal</Filter>
     </ClInclude>
     <ClInclude Include="sky.h">
       <Filter>object\sky</Filter>
@@ -213,20 +150,23 @@
     <ClInclude Include="renderer.h">
       <Filter>renderer</Filter>
     </ClInclude>
-    <ClInclude Include="title.h">
-      <Filter>phase\title</Filter>
-    </ClInclude>
-    <ClInclude Include="game.h">
-      <Filter>phase\game</Filter>
-    </ClInclude>
-    <ClInclude Include="result.h">
-      <Filter>phase\result</Filter>
-    </ClInclude>
     <ClInclude Include="phase.h">
       <Filter>phase</Filter>
     </ClInclude>
-    <ClInclude Include="fade.h">
-      <Filter>phase\fade</Filter>
+    <ClInclude Include="create.h">
+      <Filter>phase\create</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="importBgEnum.h">
+      <Filter>import</Filter>
+    </ClInclude>
+    <ClInclude Include="importObjEnum.h">
+      <Filter>import</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="directX.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
