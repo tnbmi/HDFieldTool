@@ -37,6 +37,8 @@ public:
 	void SetKeyboard(CInputKeyboard* keyboard){m_keyboard = keyboard;}
 	void SetMouse(CInputMouse* mouse){m_mouse = mouse;}
 
+	virtual void CreateObject(int no, int category, int type, int x, int y){};
+
 protected:
 	LPDIRECT3DDEVICE9 m_device;	// Deviceオブジェクト(デバイスへのポインタ)
 

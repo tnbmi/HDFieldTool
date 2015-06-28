@@ -381,6 +381,16 @@ BOOL CALLBACK ObjDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				DestroyWindow(wnd);
 				g_objDlgWnd = nullptr;
 				break;
+
+			// セットボタン
+			case BTN_SET:
+				int no = GetDlgItemInt(wnd, OBJ_NO, false, false);
+				int category = SendMessage(GetDlgItem(wnd, COMBO_CATEGORY), CB_GETCURSEL, 0, 0);
+				int type	 = SendMessage(GetDlgItem(wnd, COMBO_TYPE), CB_GETCURSEL, 0, 0);
+				int x = GetDlgItemInt(wnd, OBJ_X, false, false);
+				int y = GetDlgItemInt(wnd, OBJ_Y, false, false);
+				g_manager->CreateObject(no, category, type, x, y);
+				break;
 			}
 
 			switch(HIWORD(wParam))

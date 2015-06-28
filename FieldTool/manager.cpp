@@ -209,3 +209,18 @@ void CManager::CalculateFPS(DWORD frameCnt, DWORD curTime, DWORD FPSLastTime)
 {
 	m_renderer->SetFPS(frameCnt * 1000 / (curTime - FPSLastTime));
 }
+
+//=============================================================================
+// オブジェクト生成
+//=============================================================================
+void CManager::CreateObject(int no, int category, int type, int x, int y)
+{
+	if(m_phase != nullptr)
+	{
+		m_phase->CreateObject(no, category, type, x, y);
+	}
+	else
+	{
+
+	}
+}

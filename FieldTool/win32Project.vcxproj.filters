@@ -68,6 +68,9 @@
     <Filter Include="phase\game">
       <UniqueIdentifier>{fc633cb9-6c6a-43da-b6ff-29ee1c5742a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="object\road">
+      <UniqueIdentifier>{224fd8ad-51a6-42cf-aad0-53b33a461513}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -111,6 +114,15 @@
     </ClCompile>
     <ClCompile Include="create.cpp">
       <Filter>phase\create</Filter>
+    </ClCompile>
+    <ClCompile Include="road.cpp">
+      <Filter>object\road</Filter>
+    </ClCompile>
+    <ClCompile Include="road_manager.cpp">
+      <Filter>object\road</Filter>
+    </ClCompile>
+    <ClCompile Include="stumbler.cpp">
+      <Filter>object\stumbler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +174,15 @@
     </ClInclude>
     <ClInclude Include="importObjEnum.h">
       <Filter>import</Filter>
+    </ClInclude>
+    <ClInclude Include="road.h">
+      <Filter>object\road</Filter>
+    </ClInclude>
+    <ClInclude Include="road_manager.h">
+      <Filter>object\road</Filter>
+    </ClInclude>
+    <ClInclude Include="stumbler.h">
+      <Filter>object\stumbler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,9 @@
 #include "sky.h"
 #include "background.h"
 
+// オブジェクト
+#include "stumbler.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -96,4 +99,25 @@ void CCreate::Debug(void)
 void CCreate::InitObject(LPDIRECT3DDEVICE9 device)
 {
 
+}
+
+//=============================================================================
+// オブジェクト生成
+//=============================================================================
+void CCreate::CreateObject(int no, int category, int type, int x, int y)
+{
+	switch(category)
+	{
+		case 1:
+		{
+			STUM_DATA data = {(STUM_TYPE)type, D3DXVECTOR2((float)x, (float)y)};
+			CStumbler::Create(m_device, data, CScene2D::POINT_LEFTTOP);
+			break;
+		}
+
+		default:
+		{
+			break;
+		}
+	}
 }

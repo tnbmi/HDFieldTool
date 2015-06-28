@@ -42,6 +42,8 @@ public:
 	static void SetNextPhase(CPhase* phase){m_phaseNext = phase;}
 	static HWND GetWindowHandle(){ return m_window_handle; }
 
+	void CreateObject(int no, int category, int type, int x, int y);
+
 private:
 	static HWND m_window_handle;
 	CRenderer*	m_renderer;
