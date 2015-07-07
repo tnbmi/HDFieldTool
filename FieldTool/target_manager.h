@@ -1,39 +1,43 @@
 //=============================================================================
 //
-// road_managerクラス [road_manager.h]
+// target_managerクラス [target_manager.h]
 // Author : Ken Matsuura
 //
 //=============================================================================
 
 // インクルードガード
-#ifndef __ROAD_MANAGER_H__
-#define __ROAD_MANAGER_H__
+#ifndef __TARGET_MANAGER_H__
+#define __TARGET_MANAGER_H__
 
 //=============================================================================
 // インクルード
 //=============================================================================
 #include "main.h"
 #include "scene2D.h"
-class CRoad;
+class CTarget;
 
 //=============================================================================
 // クラス定義
 //=============================================================================
-class CRoadManager
+class CTargetManager
 {
 public:
-	CRoadManager();
-	~CRoadManager(){};
+	CTargetManager();
+	~CTargetManager(){};
 	HRESULT	Init(LPDIRECT3DDEVICE9 device);
 	void	Update(void);
 	void	Scroll(float f);
-	D3DXVECTOR2	CheckHit(D3DXVECTOR2 pos, D3DXVECTOR2 size, CScene2D::POINT_TYPE pointType);
-	static	CRoadManager* Create(LPDIRECT3DDEVICE9 device);
+	CTarget*	CheckHit(D3DXVECTOR2 pos, D3DXVECTOR2 size, CScene2D::POINT_TYPE pointType);
+	bool	CheckHitGoal(D3DXVECTOR2 pos, D3DXVECTOR2 size, CScene2D::POINT_TYPE pointType);
+	static	CTargetManager* Create(LPDIRECT3DDEVICE9 device);
+	// リスト抹消
+	void	UnLinkTarget(CTarget* cur);
 private:
-	CRoad* m_list_top;		// 障害物リスト先頭
-	CRoad* m_list_cur;		// 障害物リスト末尾
+	CTarget* m_list_top;		// 障害物リスト先頭
+	CTarget* m_list_cur;		// 障害物リスト末尾
 };
 
 // インクルードガード終了
-#endif // __ROAD_MANAGER_H__
+#endif // __STUM_MANAGER_H__
+
 // End of File

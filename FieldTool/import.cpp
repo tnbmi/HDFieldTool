@@ -9,8 +9,9 @@
 // インクルードファイル
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "import.h"
-#include "importBgEnum.h"
-#include "importObjEnum.h"
+#include "mapBg.h"
+#include "mapObj.h"
+#include "mapData.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ定義
@@ -68,10 +69,17 @@ const char* TEX_PATH[] =
 #define BG_MAX		((TOWN_01 + 1) - FOREST_01)
 #define OBJ_MAX	((GOAL_OFF + 1) - DIRT)
 
+// マップ
+const char* MAP_PATH[] =
+{
+	"./data/MAP/stage1-1.txt"
+};
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // 静的変数
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 LPDIRECT3DTEXTURE9	CImport::m_tex[TEX_MAX] = {nullptr};
+CMapData*			CImport::m_map[STAGE_MAX] = {nullptr};
 
 //=============================================================================
 // コンストラクタ
@@ -109,6 +117,14 @@ HRESULT CImport::Init(LPDIRECT3DDEVICE9 device)
 		FromFileChk(hr)
 	}
 
+	////----------------------------
+	//// マップ
+	////----------------------------
+	//for(int cnt = 0; cnt < STAGE_MAX; ++cnt)
+	//{
+	//	m_map[cnt] = CMapData::Create(MAP_PATH[cnt]);
+	//}
+
 	return S_OK;
 }
 
@@ -124,6 +140,15 @@ void CImport::Uninit(void)
 	{
 		SAFE_RELEASE(m_tex[cnt]);
 	}
+
+	////----------------------------
+	//// マップ
+	////----------------------------
+	//for(int cnt = 0; cnt < STAGE_MAX; ++cnt)
+	//{
+	//	// テクスチャの開放
+	//	SAFE_END(m_map[cnt]);
+	//}
 }
 
 //=============================================================================

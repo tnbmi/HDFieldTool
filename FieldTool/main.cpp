@@ -328,11 +328,31 @@ BOOL CALLBACK BgDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			switch(LOWORD(wParam))
 			{
-			// キャンセルボタン
-			case IDCANCEL:
-				DestroyWindow(wnd);
-				g_bgDlgWnd = nullptr;
-				break;
+				// キャンセルボタン
+				case IDCANCEL:
+				{
+					DestroyWindow(wnd);
+					g_bgDlgWnd = nullptr;
+					break;
+				}
+
+				// セットボタン
+				case BTN_SET:
+				{
+					int no = GetDlgItemInt(wnd, BG_NO, false, false);
+					int category = SendMessage(GetDlgItem(wnd, COMBO_CATEGORY), CB_GETCURSEL, 0, 0);
+					int type	 = SendMessage(GetDlgItem(wnd, COMBO_TYPE), CB_GETCURSEL, 0, 0);
+					g_manager->CreateBg(no, category, type);
+					break;
+				}
+
+				// 削除ボタン
+				case BTN_DEL:
+				{
+					int no = GetDlgItemInt(wnd, BG_NO, false, false);
+					g_manager->DeleteBg(no);
+					break;
+				}
 			}
 
 			switch(HIWORD(wParam))
@@ -376,21 +396,34 @@ BOOL CALLBACK ObjDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 			switch(LOWORD(wParam))
 			{
-			// キャンセルボタン
-			case IDCANCEL:
-				DestroyWindow(wnd);
-				g_objDlgWnd = nullptr;
-				break;
+				// キャンセルボタン
+				case IDCANCEL:
+				{
+					DestroyWindow(wnd);
+					g_objDlgWnd = nullptr;
+					break;
+				}
 
-			// セットボタン
-			case BTN_SET:
-				int no = GetDlgItemInt(wnd, OBJ_NO, false, false);
-				int category = SendMessage(GetDlgItem(wnd, COMBO_CATEGORY), CB_GETCURSEL, 0, 0);
-				int type	 = SendMessage(GetDlgItem(wnd, COMBO_TYPE), CB_GETCURSEL, 0, 0);
-				int x = GetDlgItemInt(wnd, OBJ_X, false, false);
-				int y = GetDlgItemInt(wnd, OBJ_Y, false, false);
-				g_manager->CreateObject(no, category, type, x, y);
-				break;
+				// セットボタン
+				case BTN_SET:
+				{
+					int no = GetDlgItemInt(wnd, OBJ_NO, false, false);
+					int category = SendMessage(GetDlgItem(wnd, COMBO_CATEGORY), CB_GETCURSEL, 0, 0);
+					int type	 = SendMessage(GetDlgItem(wnd, COMBO_TYPE), CB_GETCURSEL, 0, 0);
+					int x = GetDlgItemInt(wnd, OBJ_X, false, false);
+					int y = GetDlgItemInt(wnd, OBJ_Y, false, false);
+					g_manager->CreateObj(no, category, type, x, y);
+					break;
+				}
+
+				// 削除ボタン
+				case BTN_DEL:
+				{
+					int no = GetDlgItemInt(wnd, OBJ_NO, false, false);
+					int category = SendMessage(GetDlgItem(wnd, COMBO_CATEGORY), CB_GETCURSEL, 0, 0);
+					g_manager->DeleteObj(no, category);
+					break;
+				}
 			}
 
 			switch(HIWORD(wParam))

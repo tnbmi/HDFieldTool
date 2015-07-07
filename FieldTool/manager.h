@@ -42,7 +42,11 @@ public:
 	static void SetNextPhase(CPhase* phase){m_phaseNext = phase;}
 	static HWND GetWindowHandle(){ return m_window_handle; }
 
-	void CreateObject(int no, int category, int type, int x, int y);
+	void CreateBg(int no, int category, int type);
+	void DeleteBg(int no);
+
+	void CreateObj(int no, int category, int type, int x, int y);
+	void DeleteObj(int no, int category);
 
 private:
 	static HWND m_window_handle;

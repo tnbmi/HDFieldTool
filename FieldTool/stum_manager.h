@@ -1,39 +1,46 @@
 //=============================================================================
 //
-// road_managerクラス [road_manager.h]
+// stum_managerクラス [stum_manager.h]
 // Author : Ken Matsuura
 //
 //=============================================================================
 
 // インクルードガード
-#ifndef __ROAD_MANAGER_H__
-#define __ROAD_MANAGER_H__
+#ifndef __STUM_MANAGER_H__
+#define __STUM_MANAGER_H__
 
 //=============================================================================
 // インクルード
 //=============================================================================
 #include "main.h"
 #include "scene2D.h"
-class CRoad;
+class CStumbler;
 
 //=============================================================================
 // クラス定義
 //=============================================================================
-class CRoadManager
+class CStumManager
 {
 public:
-	CRoadManager();
-	~CRoadManager(){};
+	CStumManager();
+	~CStumManager(){};
 	HRESULT	Init(LPDIRECT3DDEVICE9 device);
 	void	Update(void);
 	void	Scroll(float f);
-	D3DXVECTOR2	CheckHit(D3DXVECTOR2 pos, D3DXVECTOR2 size, CScene2D::POINT_TYPE pointType);
-	static	CRoadManager* Create(LPDIRECT3DDEVICE9 device);
+	bool	CheckHit(D3DXVECTOR2 pos, D3DXVECTOR2 size, CScene2D::POINT_TYPE pointType);
+	static	CStumManager* Create(LPDIRECT3DDEVICE9 device);
+	// リスト抹消
+	void	UnLinkStum(CStumbler* cur);
 private:
-	CRoad* m_list_top;		// 障害物リスト先頭
-	CRoad* m_list_cur;		// 障害物リスト末尾
+	CStumbler* m_list_top;		// 障害物リスト先頭
+	CStumbler* m_list_cur;		// 障害物リスト末尾
 };
 
+
+
+
+
 // インクルードガード終了
-#endif // __ROAD_MANAGER_H__
+#endif // __STUM_MANAGER_H__
+
 // End of File

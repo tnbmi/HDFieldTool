@@ -1,6 +1,6 @@
 //*****************************************************************************
 //
-// オブジェクト列挙体 [import.cpp]
+// 背景列挙体 [mapBg.cpp]
 // Author :MAI TANABE
 //
 //*****************************************************************************
@@ -11,17 +11,16 @@
 //----------------------------
 // カテゴリの文字列
 //----------------------------
-const char* CATEGORY_OBJ[] =
+const char* CATEGORY_BG[] =
 {
-	"道",
-	"障害物",
-	"ターゲット",
+	"FOREST",
+	"TOWN",
 };
 
 //----------------------------
 // カテゴリ数
 //----------------------------
-const int CATEGORY_OBJ_NUM = (sizeof(CATEGORY_OBJ) / sizeof(char*));
+const int CATEGORY_BG_NUM = (sizeof(CATEGORY_BG) / sizeof(char*));
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // タイプ
@@ -29,41 +28,23 @@ const int CATEGORY_OBJ_NUM = (sizeof(CATEGORY_OBJ) / sizeof(char*));
 //----------------------------
 // タイプの文字列
 //----------------------------
-// 道
-const char* TYPE_ROAD[] =
+// 森
+const char* TYPE_FOREST[] =
 {
-	"DIRT",
-	"ASPHALT",
+	"FOREST_01",
 };
 
-// 障害物
-const char* TYPE_SRUMBLER[] =
+// 町
+const char* TYPE_TOWN[] =
 {
-	"SIGNBOARD",
-	"LION",
-	"ROCK",
-	"LOG_LEFT",
-	"LOG_CENTER",
-	"LOG_RIGHT",
-	"BIRD",
-	"DUSTBOX",
-	"BARRICADE",
-};
-
-// ターゲット
-const char* TYPE_TARGET[] =
-{
-	"GOAL_OFF",
+	"TOWN_01",
 };
 
 //----------------------------
 // タイプ数
 //----------------------------
-// 道
-const int ROAD_NUM = (sizeof(TYPE_ROAD) / sizeof(char*));
+// 森
+const int FOREST_NUM = (sizeof(TYPE_FOREST) / sizeof(char*));
 
-// 障害物
-const int SRUMBLER_NUM = (sizeof(TYPE_SRUMBLER) / sizeof(char*));
-
-// ターゲット
-const int TARGET_NUM = (sizeof(TYPE_TARGET) / sizeof(char*));
+// 町
+const int TOWN_NUM = (sizeof(TYPE_TOWN) / sizeof(char*));

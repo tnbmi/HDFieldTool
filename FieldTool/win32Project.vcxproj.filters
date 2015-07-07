@@ -35,9 +35,6 @@
     <Filter Include="object\stumbler">
       <UniqueIdentifier>{d08ffa58-4e0d-47ee-8658-d6a224a3ebc9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="object\goal">
-      <UniqueIdentifier>{888eba1b-8066-4f82-a09c-cfc27376d83b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="object\character\player">
       <UniqueIdentifier>{91a77246-88e4-4028-a96a-f6b13ab23745}</UniqueIdentifier>
     </Filter>
@@ -59,9 +56,6 @@
     <Filter Include="renderer">
       <UniqueIdentifier>{c06ec4af-a36a-4cd4-94d7-62357f0ad206}</UniqueIdentifier>
     </Filter>
-    <Filter Include="object\particle">
-      <UniqueIdentifier>{b5d34b13-69e6-49ff-9a06-ed2fa9da34bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="phase\create">
       <UniqueIdentifier>{680737bd-da8b-40b5-9d93-f804936e2705}</UniqueIdentifier>
     </Filter>
@@ -70,6 +64,15 @@
     </Filter>
     <Filter Include="object\road">
       <UniqueIdentifier>{224fd8ad-51a6-42cf-aad0-53b33a461513}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="map">
+      <UniqueIdentifier>{be6e35cb-08a6-40b4-a2ba-c3391325a7dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object\target">
+      <UniqueIdentifier>{aae38c61-9132-4181-aeac-bc7c6af1affd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="object\listMapData">
+      <UniqueIdentifier>{37437d3a-90b1-4bdc-8578-74d8edce9b66}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +127,24 @@
     <ClCompile Include="stumbler.cpp">
       <Filter>object\stumbler</Filter>
     </ClCompile>
+    <ClCompile Include="mapData.cpp">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="target.cpp">
+      <Filter>object\target</Filter>
+    </ClCompile>
+    <ClCompile Include="target_manager.cpp">
+      <Filter>object\target</Filter>
+    </ClCompile>
+    <ClCompile Include="stum_manager.cpp">
+      <Filter>object\stumbler</Filter>
+    </ClCompile>
+    <ClCompile Include="background_manager.cpp">
+      <Filter>object\background</Filter>
+    </ClCompile>
+    <ClCompile Include="listMapData.cpp">
+      <Filter>object\listMapData</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -169,12 +190,6 @@
       <Filter>phase\create</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="importBgEnum.h">
-      <Filter>import</Filter>
-    </ClInclude>
-    <ClInclude Include="importObjEnum.h">
-      <Filter>import</Filter>
-    </ClInclude>
     <ClInclude Include="road.h">
       <Filter>object\road</Filter>
     </ClInclude>
@@ -183,6 +198,30 @@
     </ClInclude>
     <ClInclude Include="stumbler.h">
       <Filter>object\stumbler</Filter>
+    </ClInclude>
+    <ClInclude Include="mapBg.h">
+      <Filter>import</Filter>
+    </ClInclude>
+    <ClInclude Include="mapObj.h">
+      <Filter>import</Filter>
+    </ClInclude>
+    <ClInclude Include="mapData.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="target.h">
+      <Filter>object\target</Filter>
+    </ClInclude>
+    <ClInclude Include="target_manager.h">
+      <Filter>object\target</Filter>
+    </ClInclude>
+    <ClInclude Include="stum_manager.h">
+      <Filter>object\stumbler</Filter>
+    </ClInclude>
+    <ClInclude Include="background_manager.h">
+      <Filter>object\background</Filter>
+    </ClInclude>
+    <ClInclude Include="listMapData.h">
+      <Filter>object\listMapData</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

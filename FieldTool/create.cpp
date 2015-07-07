@@ -15,12 +15,17 @@
 
 #include "scene2D.h"
 
+// マップデータ
+#include "listMapData.h"
+
 // 背景
 #include "sky.h"
 #include "background.h"
 
 // オブジェクト
+#include "road.h"
 #include "stumbler.h"
+#include "target.h"
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ
@@ -102,16 +107,130 @@ void CCreate::InitObject(LPDIRECT3DDEVICE9 device)
 }
 
 //=============================================================================
-// オブジェクト生成
+// 背景生成
 //=============================================================================
-void CCreate::CreateObject(int no, int category, int type, int x, int y)
+void CCreate::CreateBg(int no, int category, int type)
 {
 	switch(category)
 	{
+		// 森
+		case 0:
+		{
+			// 背景生成
+			BG_DATA data = {(BG_TYPE)(TYPE_FOREST_01 + type), no};
+			CBackground* bg = CBackground::Create(m_device, data);
+
+			// マップデータに追加
+			CListMapData::LinkBg(no, bg);
+			break;
+		}
+
+		// 町
 		case 1:
 		{
+			// 背景生成
+			BG_DATA data = {(BG_TYPE)(TYPE_TWON_01 + type), no};
+			CBackground* bg = CBackground::Create(m_device, data);
+
+			// マップデータに追加
+			CListMapData::LinkBg(no, bg);
+			break;
+		}
+
+		default:
+		{
+			break;
+		}
+	}
+}
+
+//=============================================================================
+// 背景削除
+//=============================================================================
+void CCreate::DeleteBg(int no)
+{
+	// マップデータを削除
+	CListMapData::DelBg(no);
+}
+
+//=============================================================================
+// オブジェクト生成
+//=============================================================================
+void CCreate::CreateObj(int no, int category, int type, int x, int y)
+{
+	switch(category)
+	{
+		// 道
+		case 0:
+		{
+			// オブジェクト生成
+			ROAD_DATA data = {(ROAD_TYPE)type, D3DXVECTOR2((float)x, (float)y)};
+			CRoad* road = CRoad::Create(m_device, data, CScene2D::POINT_LEFTTOP);
+
+			// マップデータに追加
+			CListMapData::LinkRoad(no, road);
+			break;
+		}
+
+		// 障害物
+		case 1:
+		{
+			// オブジェクト生成
 			STUM_DATA data = {(STUM_TYPE)type, D3DXVECTOR2((float)x, (float)y)};
-			CStumbler::Create(m_device, data, CScene2D::POINT_LEFTTOP);
+			CStumbler* stum = CStumbler::Create(m_device, data, CScene2D::POINT_LEFTTOP);
+
+			// マップデータに追加
+			CListMapData::LinkStum(no, stum);
+			break;
+		}
+
+		// ターゲット
+		case 2:
+		{
+			// オブジェクト生成
+			TARGET_DATA data = {(TARGET_TYPE)type, D3DXVECTOR2((float)x, (float)y)};
+			CTarget* target = CTarget::Create(m_device, data, CScene2D::POINT_LEFTTOP);
+
+			// マップデータに追加
+			CListMapData::LinkTarget(no, target);
+			break;
+		}
+
+		default:
+		{
+			break;
+		}
+	}
+}
+
+//=============================================================================
+// オブジェクト削除
+//=============================================================================
+void CCreate::DeleteObj(int no, int category)
+{
+	switch(category)
+	{
+		// 道
+		case 0:
+		{
+			// マップデータを削除
+			CListMapData::DelRoad(no);
+			break;
+		}
+
+		// 障害物
+		case 1:
+		{
+			// マップデータを削除
+			CListMapData::DelStum(no);
+			break;
+		}
+
+		// ターゲット
+		case 2:
+		{
+			// マップデータを削除
+			CListMapData::DelTarget(no);
 			break;
 		}
 

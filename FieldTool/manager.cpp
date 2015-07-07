@@ -211,16 +211,45 @@ void CManager::CalculateFPS(DWORD frameCnt, DWORD curTime, DWORD FPSLastTime)
 }
 
 //=============================================================================
-// オブジェクト生成
+// 背景生成
 //=============================================================================
-void CManager::CreateObject(int no, int category, int type, int x, int y)
+void CManager::CreateBg(int no, int category, int type)
 {
 	if(m_phase != nullptr)
 	{
-		m_phase->CreateObject(no, category, type, x, y);
+		m_phase->CreateBg(no, category, type);
 	}
-	else
-	{
+}
 
+//=============================================================================
+// 背景削除
+//=============================================================================
+void CManager::DeleteBg(int no)
+{
+	if(m_phase != nullptr)
+	{
+		m_phase->DeleteBg(no);
+	}
+}
+
+//=============================================================================
+// オブジェクト生成
+//=============================================================================
+void CManager::CreateObj(int no, int category, int type, int x, int y)
+{
+	if(m_phase != nullptr)
+	{
+		m_phase->CreateObj(no, category, type, x, y);
+	}
+}
+
+//=============================================================================
+// オブジェクト削除
+//=============================================================================
+void CManager::DeleteObj(int no, int category)
+{
+	if(m_phase != nullptr)
+	{
+		m_phase->DeleteObj(no, category);
 	}
 }

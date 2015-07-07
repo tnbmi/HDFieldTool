@@ -144,7 +144,7 @@ void CListObject::UnlinkUpdate(CScene* obj)
 	{
 		m_updateCur = prev;
 
-		if(m_updateTop != nullptr)
+		if(m_updateCur != nullptr)
 		{
 			m_updateCur->SetUpdateNext(nullptr);
 		}
@@ -206,7 +206,7 @@ void CListObject::UnlinkDraw(CScene* obj)
 	{
 		m_drawCur[priority] = prev;
 
-		if(m_drawTop[priority] != nullptr)
+		if(m_drawCur[priority] != nullptr)
 		{
 			m_drawCur[priority]->SetDrawNext(nullptr);
 		}

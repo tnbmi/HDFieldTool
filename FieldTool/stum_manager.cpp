@@ -1,22 +1,23 @@
 //=============================================================================
 //
-// road_managerクラス [road_manager.cpp]
+// stum_managerクラス [stum_manager.cpp]
 // Author : Ken Matsuura
 //
 //=============================================================================
 
+
 //=============================================================================
 // インクルード
 //=============================================================================
-#include "road_manager.h"
-#include "road.h"
+#include "stum_manager.h"
+#include "stumbler.h"
 
 #include "mapData.h"
 
 //=============================================================================
 // コンストラクタ
 //=============================================================================
-CRoadManager::CRoadManager()
+CStumManager::CStumManager()
 {
 	m_list_top = NULL;
 	m_list_cur = NULL;
@@ -25,9 +26,9 @@ CRoadManager::CRoadManager()
 //=============================================================================
 // クリエイト関数
 //=============================================================================
-CRoadManager* CRoadManager::Create(LPDIRECT3DDEVICE9 device)
+CStumManager* CStumManager::Create(LPDIRECT3DDEVICE9 device)
 {
-	CRoadManager* manager = new CRoadManager;
+	CStumManager* manager = new CStumManager;
 
 	if(manager->Init(device) == E_FAIL)
 	{
@@ -40,55 +41,54 @@ CRoadManager* CRoadManager::Create(LPDIRECT3DDEVICE9 device)
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT CRoadManager::Init(LPDIRECT3DDEVICE9 device)
+HRESULT CStumManager::Init(LPDIRECT3DDEVICE9 device)
 {
 	//----------------------------------------
 	// データ取得
 	//----------------------------------------
 	CMapData*	mapData = CImport::GetMap(CImport::STAGE_1_1);
-	ROAD_DATA*	data = mapData->GetRoadData();
-	int			size = mapData->GetRoadSize();
+	STUM_DATA*	data = mapData->GetStumData();
+	int			size = mapData->GetStumSize();
 
 	// データの個数分生成処理
 	for(int loop = 0; loop < size; loop++)
 	{
-		// 道路リスト先頭が空の時
+		// 障害物リスト先頭が空の時
 		if(m_list_top == NULL)
 		{
-			// 道路リスト先頭に道路生成
-			m_list_top = CRoad::Create(device, data[loop], CScene2D::POINT_LEFTTOP);
-			// 道路リスト末尾を道路リスト先頭に
+			// 障害物リスト先頭に障害物生成
+			m_list_top = CStumbler::Create(device, data[loop], CScene2D::POINT_LEFTTOP);
+			// 障害物リスト末尾を障害物リスト先頭に
 			m_list_cur = m_list_top;
 		}
 		else
 		{
-			// 道路生成
-			CRoad* p = CRoad::Create(device, data[loop], CScene2D::POINT_LEFTTOP);
-			// 道路リスト末尾のnextに生成した道路をセット
-			m_list_cur->SetRoadNext(p);
-			// 生成した道路のprevに道路リスト末尾をセット
-			p->SetRoadPrev(m_list_cur);
-			// 道路リスト末尾を生成した道路に
+			// 障害物生成
+			CStumbler* p = CStumbler::Create(device, data[loop], CScene2D::POINT_LEFTTOP);
+			// 障害物リスト末尾のnextに生成した障害物をセット
+			m_list_cur->SetStumNext(p);
+			// 生成した障害物のprevに障害物リスト末尾をセット
+			p->SetStumPrev(m_list_cur);
+			// 障害物リスト末尾を生成した障害物に
 			m_list_cur = p;
 		}
 	}
-
 	return S_OK;
 }
 
 //=============================================================================
 // 更新処理
 //=============================================================================
-void CRoadManager::Update(void)
+void CStumManager::Update(void)
 {
-	CRoad* cur = m_list_top;
-	CRoad* next;
+	CStumbler* cur = m_list_top;
+	CStumbler* next;
 
 	while(cur)
 	{
 		cur->Update();
 
-		next = cur->GetRoadNext();
+		next = cur->GetStumNext();
 
 		cur = next;
 	}
@@ -97,16 +97,16 @@ void CRoadManager::Update(void)
 //=============================================================================
 // スクロール
 //=============================================================================
-void CRoadManager::Scroll(float f)
+void CStumManager::Scroll(float f)
 {
-	CRoad* cur = m_list_top;
-	CRoad* next;
+	CStumbler* cur = m_list_top;
+	CStumbler* next;
 
 	while(cur)
 	{
 		cur->Scroll(f);
 
-		next = cur->GetRoadNext();
+		next = cur->GetStumNext();
 
 		cur = next;
 	}
@@ -115,27 +115,40 @@ void CRoadManager::Scroll(float f)
 //=============================================================================
 // 衝突判定
 //=============================================================================
-D3DXVECTOR2	CRoadManager::CheckHit(D3DXVECTOR2 pos, D3DXVECTOR2 size, CScene2D::POINT_TYPE pointType)
+bool CStumManager::CheckHit(D3DXVECTOR2 pos, D3DXVECTOR2 size, CScene2D::POINT_TYPE pointType)
 {
-	CRoad* cur = m_list_top;
-	CRoad* next;
+	CStumbler* cur = m_list_top;
+	CStumbler* next;
 
 	while(cur)
 	{
-		// ぶつかっていた場合、めり込んでる数値分を返す
 		if(cur->CheckCollisionAABB(pos, size, pointType) == true)
 		{
-			return cur->ReturnPush(pos, size, pointType);
+			// ぶつかってる障害物にダメージ
+			cur->Attack(1);
+			// ダメージで死んでたらリストから削除
+			if(cur->LivingCheck())
+				UnLinkStum(cur);
+			return true;
 		}
 
-		next = cur->GetRoadNext();
+		next = cur->GetStumNext();
 
 		cur = next;
 	}
-
-	// ぶつかってない場合
-	return D3DXVECTOR2(0.0f, 0.0f);
+	return false;
 }
 
-
+//=============================================================================
+// リスト抹消
+//=============================================================================
+void CStumManager::UnLinkStum(CStumbler* cur)
+{
+	// リスト先頭だった場合、次障害物をリスト先頭に
+	if(cur == m_list_top)
+		m_list_top = cur->GetStumNext();
+	// リスト末尾だった場合、前障害物をリスト末尾に
+	if(cur == m_list_cur)
+		m_list_cur = cur->GetStumPrev();
+}
 // End of File

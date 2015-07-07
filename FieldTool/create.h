@@ -39,7 +39,11 @@ public:
 	void	Update(void);
 	void	Draw(void);
 
-	void CreateObject(int no, int category, int type, int x, int y);
+	void CreateBg(int no, int category, int type);
+	void DeleteBg(int no);
+
+	void CreateObj(int no, int category, int type, int x, int y);
+	void DeleteObj(int no, int category);
 
 private:
 	void InitObject(LPDIRECT3DDEVICE9 device);

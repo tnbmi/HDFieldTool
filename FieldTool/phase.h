@@ -37,7 +37,11 @@ public:
 	void SetKeyboard(CInputKeyboard* keyboard){m_keyboard = keyboard;}
 	void SetMouse(CInputMouse* mouse){m_mouse = mouse;}
 
-	virtual void CreateObject(int no, int category, int type, int x, int y){};
+	virtual void CreateBg(int no, int category, int type){};
+	virtual void DeleteBg(int no){};
+
+	virtual void CreateObj(int no, int category, int type, int x, int y){};
+	virtual void DeleteObj(int no, int category){};
 
 protected:
 	LPDIRECT3DDEVICE9 m_device;	// Deviceオブジェクト(デバイスへのポインタ)

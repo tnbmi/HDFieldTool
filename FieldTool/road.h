@@ -20,8 +20,7 @@
 // 画像データ識別
 typedef enum{
 	TYPE_DIRT = 0,
-	TYPE_ASPHALT,
-	TYPE_MAX
+	TYPE_ASPHALT
 }ROAD_TYPE;
 
 // 地面情報
@@ -46,6 +45,9 @@ public:
 	void	Uninit(void);
 	void	Update(void);
 	void	Draw(void);
+
+	// 押し返し処理
+	D3DXVECTOR2	ReturnPush(D3DXVECTOR2 pos, D3DXVECTOR2 size, POINT_TYPE pointType);
 
 	// スクロール処理
 	void	Scroll(float scroll){m_pos.x -= scroll; CScene2D::SetVertexPolygon();}
