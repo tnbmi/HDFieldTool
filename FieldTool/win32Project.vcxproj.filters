@@ -29,9 +29,6 @@
     <Filter Include="object\stumbler">
       <UniqueIdentifier>{d08ffa58-4e0d-47ee-8658-d6a224a3ebc9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="object\character\player">
-      <UniqueIdentifier>{91a77246-88e4-4028-a96a-f6b13ab23745}</UniqueIdentifier>
-    </Filter>
     <Filter Include="object\sky">
       <UniqueIdentifier>{04228886-7ee5-4cc2-a79a-9001cdde358b}</UniqueIdentifier>
     </Filter>
