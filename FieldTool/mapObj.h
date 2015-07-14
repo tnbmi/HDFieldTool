@@ -33,7 +33,10 @@ const int CATEGORY_OBJ_NUM = (sizeof(CATEGORY_OBJ) / sizeof(char*));
 const char* TYPE_ROAD[] =
 {
 	"DIRT",
-	"ASPHALT",
+	"SAND",
+	"ICE",
+	"GRASSFIELD",
+	"WATER",
 };
 
 // 障害物
@@ -54,7 +57,8 @@ const char* TYPE_SRUMBLER[] =
 	"NUTS",
 	"NUTS_REVERSE",
 	"SANDSTONE",
-	"NEEDLE",
+	"BEE",
+	"HUNEYCOMB",
 };
 
 // ターゲット
