@@ -66,6 +66,10 @@ public:
 	static void SaveMap(const char* filePath, const char* fileName);
 
 private:
+	static int GridChkRoad(int x, int y, CRoad** obj);
+	static int GridChkSrum(int x, int y, CStumbler** obj);
+	static int GridChkBg(int x, int y, CBackground** obj);
+
 	// 背景
 	static CBackground* m_topBg;	// 先頭ポインタ
 	static CBackground* m_curBg;	// 現在終端ポインタ

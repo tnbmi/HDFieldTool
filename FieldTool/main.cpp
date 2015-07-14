@@ -404,7 +404,7 @@ BOOL CALLBACK ToolDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			case BTN_BG_SET:
 				{
 					int no	 = GetDlgItemInt(wnd, EDIT_PAGE, false, false);
-					int type = SendMessage(GetDlgItem(wnd, COMBO_TYPE), CB_GETCURSEL, 0, 0);
+					int type = SendMessage(GetDlgItem(wnd, COMBO_BG_TYPE), CB_GETCURSEL, 0, 0);
 					g_manager->CreateBg(no, type);
 					break;
 				}

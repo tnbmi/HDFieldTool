@@ -34,7 +34,8 @@ typedef enum{
 	TYPE_NUTS,
 	TYPE_NUTS_REVERSE,
 	TYPE_SANDSTONE,
-	TYPE_NEEDLE,
+	TYPE_BEE,
+	TYPE_HUNEYCOMB,
 }STUM_TYPE;
 
 // 障害物情報
@@ -82,6 +83,16 @@ public:
 	void		SetStumType(STUM_TYPE type){m_type = type;}
 	// デフォルト位置セット処理
 	void		SetDefPos(D3DXVECTOR2 pos){m_defpos = pos;}
+	// 落下フラグ
+	void		SetFall(void){m_fallFrag = true;}
+	// 落下チェック
+	void		CheckFall(D3DXVECTOR2 pos);
+	// 障害物削除フラグオン
+	void		SetStumDelete(void){m_stumDelete = true;}
+	// 障害物削除フラグ状態取得
+	bool		GetStumDelete(void){return m_stumDelete;}
+	// 移動値セット
+	void		SetStumMove(D3DXVECTOR2 v){m_move = v;}
 
 	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
 	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
@@ -95,9 +106,11 @@ protected:
 	CStumbler*	m_next;						// 次障害物へのポインタ
 	CStumbler*	m_prev;						// 前障害物へのポインタ
 	STUM_TYPE	m_type;						// 障害物タイプ
-	float		m_move;						// 移動値
+	D3DXVECTOR2	m_move;						// 移動値
 	D3DXVECTOR2	m_defpos;					// 初期位置
 	int			m_texAnim;					// テクスチャアニメーション用タイマ
+	bool		m_fallFrag;					// 落下フラグ
+	bool		m_stumDelete;				// 障害物削除フラグあ
 };
 
 //=============================================================================

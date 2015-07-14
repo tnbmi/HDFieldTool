@@ -82,10 +82,7 @@ void CListMapData::LinkBg(unsigned int no, CBackground* obj)
 	if(objChk != nullptr)
 	{
 		// 既にあったら削除
-		UnlinkBg(obj);
-
-		// 全体カウント
-		m_numBg--;
+		DelBg(no);
 	}
 
 	//----------------------------
@@ -757,7 +754,7 @@ void CListMapData::SaveMap(const char* filePath, const char* fileName)
 	// 個数
 	//----------------------------
 	fprintf(fp,"=============================================================================\n");
-	fprintf(fp,"Num (Bg Road Stum Target)\n");
+	fprintf(fp,"Num(Bg_Road_Stum_Target)\n");
 	fprintf(fp,"=============================================================================\n");
 	fprintf(fp,"n %d %d %d %d\n", m_numBg, m_numRoad, m_numStum, m_numTarget);
 	fprintf(fp,"\n");
@@ -766,7 +763,7 @@ void CListMapData::SaveMap(const char* filePath, const char* fileName)
 	// 背景
 	//----------------------------
 	fprintf(fp,"=============================================================================\n");
-	fprintf(fp,"Background (Type)\n");
+	fprintf(fp,"Background(Type)\n");
 	fprintf(fp,"=============================================================================\n");
 	for(unsigned int cnt = 0; cnt < m_numBg; ++cnt)
 	{
@@ -787,7 +784,7 @@ void CListMapData::SaveMap(const char* filePath, const char* fileName)
 	// 道
 	//----------------------------
 	fprintf(fp,"=============================================================================\n");
-	fprintf(fp,"Road (Type Index.X Index.Y)\n");
+	fprintf(fp,"Road(Type_Index.X_Index.Y)\n");
 	fprintf(fp,"=============================================================================\n");
 	for(unsigned int cnt = 0; cnt < m_numRoad; ++cnt)
 	{
@@ -808,7 +805,7 @@ void CListMapData::SaveMap(const char* filePath, const char* fileName)
 	// 障害物
 	//----------------------------
 	fprintf(fp,"=============================================================================\n");
-	fprintf(fp,"Stumbler (Type Index.X Index.Y)\n");
+	fprintf(fp,"Stumbler(Type_Index.X_Index.Y)\n");
 	fprintf(fp,"=============================================================================\n");
 	for(unsigned int cnt = 0; cnt < m_numStum; ++cnt)
 	{
@@ -829,7 +826,7 @@ void CListMapData::SaveMap(const char* filePath, const char* fileName)
 	// ターゲット
 	//----------------------------
 	fprintf(fp,"=============================================================================\n");
-	fprintf(fp,"Target (Type Index.X Index.Y)\n");
+	fprintf(fp,"Target(Type_Index.X_Index.Y)\n");
 	fprintf(fp,"=============================================================================\n");
 	for(unsigned int cnt = 0; cnt < m_numTarget; ++cnt)
 	{
@@ -837,7 +834,7 @@ void CListMapData::SaveMap(const char* filePath, const char* fileName)
 		if(target != nullptr)
 		{
 			TARGET_DATA targetData = target->GetData();
-			fprintf(fp,"s %d %d %d\n", targetData.type + 1, (int)targetData.Index.x, (int)targetData.Index.y);
+			fprintf(fp,"t %d %d %d\n", targetData.type + 1, (int)targetData.Index.x, (int)targetData.Index.y);
 		}
 		else
 		{
