@@ -53,6 +53,9 @@ public:
 	static CTarget* GetTarget(unsigned int no);
 	static void		DelTarget(unsigned int no);
 
+	// 全体スクロール
+	static void Scroll(float scroll);
+
 private:
 	// 背景
 	static CBackground* m_topBg;	// 先頭ポインタ

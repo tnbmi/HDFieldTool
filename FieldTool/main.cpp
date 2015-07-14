@@ -69,10 +69,10 @@ int APIENTRY WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, 
 		0,
 		0,
 		instance,						// インスタンスハンドル
-		nullptr,							// アイコン指定
+		nullptr,						// アイコン指定
 		LoadCursor(nullptr, IDC_ARROW),	// マウスカーソル指定
 		(HBRUSH)(COLOR_WINDOW + 0),		// 背景
-		MAKEINTRESOURCE(nullptr),			// メニューの表示
+		MAKEINTRESOURCE(nullptr),		// メニューの表示
 		CLASS_NAME,						// ウインドウクラスの名前
 		nullptr							// 小さいアイコン指定
 	};
@@ -256,6 +256,7 @@ BOOL CALLBACK ToolDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	//----------------------------
 	case WM_INITDIALOG:
 		{
+			SetDlgItemInt(wnd, EDIT_PAGE, 0, false);
 			return TRUE;
 		}
 
@@ -294,6 +295,18 @@ BOOL CALLBACK ToolDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 												ObjDlgProc);
 					ShowWindow(g_objDlgWnd, SW_SHOW);
 				}
+				break;
+
+			// 左スクロールボタン
+			case BTN_SCROLL_L:
+				g_manager->Scroll((float)-SCREEN_WIDTH);
+				SetDlgItemInt(wnd, EDIT_PAGE, g_manager->GetPage(), false);
+				break;
+
+			// 右スクロールボタン
+			case BTN_SCROLL_R:
+				g_manager->Scroll((float)SCREEN_WIDTH);
+				SetDlgItemInt(wnd, EDIT_PAGE, g_manager->GetPage(), false);
 				break;
 			}
 

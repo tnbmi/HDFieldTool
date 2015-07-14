@@ -23,7 +23,7 @@ CTarget::CTarget(int priority, OBJTYPE objType) : CScene2D(priority, objType)
 //=============================================================================
 // 生成
 //=============================================================================
-CTarget* CTarget::Create(LPDIRECT3DDEVICE9 device, TARGET_DATA data, POINT_TYPE pointType)
+CTarget* CTarget::Create(LPDIRECT3DDEVICE9 device, TARGET_DATA data, POINT_TYPE pointType, int page)
 {
 	// 当たり判定大きさリスト
 	D3DXVECTOR2 Size_List[] =
@@ -44,7 +44,9 @@ CTarget* CTarget::Create(LPDIRECT3DDEVICE9 device, TARGET_DATA data, POINT_TYPE 
 	CTarget* pointer = new CTarget;
 	pointer->Init(device, (CImport::TEXTURES)(CImport::GOAL + data.type), pointType);
 	// データを元に座標の変更
-	pointer->SetPos(data.Index.x * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
+	pointer->SetPos((data.Index.x - (page * 20)) * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
+	// デフォルト位置セット処理
+	pointer->SetPosDef(data.Index.x * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
 	// ターゲットタイプによる当たり判定の変更
 	pointer->SetHitSize(Size_List[data.type]);
 	pointer->SetHitOffset(Offset_List[data.type]);

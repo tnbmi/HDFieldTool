@@ -24,14 +24,18 @@ CRoad::CRoad(int priority, OBJTYPE objType) : CScene2D(priority, objType)
 //=============================================================================
 // 生成
 //=============================================================================
-CRoad* CRoad::Create(LPDIRECT3DDEVICE9 device, ROAD_DATA data, POINT_TYPE pointType)
+CRoad* CRoad::Create(LPDIRECT3DDEVICE9 device, ROAD_DATA data, POINT_TYPE pointType, int page)
 {
 	CRoad* pointer = new CRoad;
+
 	pointer->Init(device, (CImport::TEXTURES)(CImport::DIRT + data.type), pointType);
 	// データを元に座標の変更
 	pointer->SetSize(ROAD_SIZE, ROAD_SIZE);
 	pointer->SetHitSize(D3DXVECTOR2(ROAD_SIZE, ROAD_SIZE));
-	pointer->SetPos(data.Index.x * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 64));
+	pointer->SetPos((data.Index.x - (page * 20)) * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 64));
+	pointer->SetPosDef(data.Index.x * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
+	pointer->SetData(data);
+
 	return pointer;
 }
 

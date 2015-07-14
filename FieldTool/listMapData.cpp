@@ -73,50 +73,39 @@ CListMapData::CListMapData()
 //=============================================================================
 void CListMapData::LinkBg(unsigned int no, CBackground* obj)
 {
-	// 後ろ(新た)に追加
-	if(no >= m_numBg)
+	//----------------------------
+	// 既存チェック
+	//----------------------------
+	CBackground* objChk = GetBg(no);
+	if(objChk != nullptr)
 	{
-		// 先頭チェック
-		if(m_topBg == nullptr)
-		{
-			m_topBg = obj;
-			obj->SetBgPrev(nullptr);
-		}
-		else
-		{
-			// 前オブジェクトから連結
-			m_curBg->SetBgNext(obj);
-			obj->SetBgPrev(m_curBg);
-		}
+		// 既にあったら削除
+		UnlinkBg(obj);
 
-		// 次オブジェクト初期化
-		obj->SetBgNext(nullptr);
-		// 終端アドレス設定
-		m_curBg = obj;
+		// 全体カウント
+		m_numBg--;
 	}
 
-	// 割り込み
+	//----------------------------
+	// 新規追加
+	//----------------------------
+	// 先頭チェック
+	if(m_topBg == nullptr)
+	{
+		m_topBg = obj;
+		obj->SetBgPrev(nullptr);
+	}
 	else
 	{
-		MessageBox(nullptr, "その番号は既に使われています。\n存在するオブジェクトの前に割り込みます。", "割り込み発生", MB_OK);
-
-		// 現在あるオブジェクトを取得
-		CBackground* nowObj = GetBg(no);
-
-		// 現在あるオブジェクト前に割り込み
-		obj->SetBgPrev(nowObj->GetBgPrev());
-		obj->SetBgNext(nowObj);
-		nowObj->SetBgPrev(obj);
-
-		// 現在あるオブジェクトを移動
-		nowObj->ResetNo(no + 1);
-
-		// トップに割り込んだらトップを更新
-		if(m_topBg == nowObj)
-		{
-			m_topBg = obj;
-		}
+		// 前オブジェクトから連結
+		m_curBg->SetBgNext(obj);
+		obj->SetBgPrev(m_curBg);
 	}
+
+	// 次オブジェクト初期化
+	obj->SetBgNext(nullptr);
+	// 終端アドレス設定
+	m_curBg = obj;
 
 	// 全体カウント
 	m_numBg++;
@@ -167,12 +156,17 @@ CBackground* CListMapData::GetBg(unsigned int no)
 	CBackground* obj = m_topBg;
 
 	// 任意の数まで進む
-	for(unsigned int cnt = 0; cnt < no; ++cnt)
+	for(unsigned int cnt = 0; cnt < m_numBg; ++cnt)
 	{
+		if(obj->GetData().index == no)
+		{
+			return obj;
+		}
+
 		obj = obj->GetBgNext();
 	}
 
-	return obj;
+	return nullptr;
 }
 
 //=============================================================================
@@ -180,17 +174,10 @@ CBackground* CListMapData::GetBg(unsigned int no)
 //=============================================================================
 void CListMapData::DelBg(unsigned int no)
 {
-	if(no < m_numBg)
+	CBackground* obj = GetBg(no);
+
+	if(obj != nullptr)
 	{
-		CBackground* obj = GetBg(no);
-		CBackground* next = obj->GetBgNext();
-
-		// 次の背景を移動
-		if(next != nullptr)
-		{
-			next->ResetNo(no);
-		}
-
 		// リストから破棄
 		UnlinkBg(obj);
 
@@ -211,47 +198,23 @@ void CListMapData::DelBg(unsigned int no)
 //=============================================================================
 void CListMapData::LinkRoad(unsigned int no, CRoad* obj)
 {
-	// 後ろ(新た)に追加
-	if(no >= m_numRoad)
+	// 先頭チェック
+	if(m_topRoad == nullptr)
 	{
-		// 先頭チェック
-		if(m_topRoad == nullptr)
-		{
-			m_topRoad = obj;
-			obj->SetRoadPrev(nullptr);
-		}
-		else
-		{
-			// 前オブジェクトから連結
-			m_curRoad->SetRoadNext(obj);
-			obj->SetRoadPrev(m_curRoad);
-		}
-
-		// 次オブジェクト初期化
-		obj->SetRoadNext(nullptr);
-		// 終端アドレス設定
-		m_curRoad = obj;
+		m_topRoad = obj;
+		obj->SetRoadPrev(nullptr);
 	}
-
-	// 割り込み
 	else
 	{
-		MessageBox(nullptr, "その番号は既に使われています。\n存在するオブジェクトの前に割り込みます。", "割り込み発生", MB_OK);
-
-		// 現在あるオブジェクトを取得
-		CRoad* nowObj = GetRoad(no);
-
-		// 現在あるオブジェクト前に割り込み
-		obj->SetRoadPrev(nowObj->GetRoadPrev());
-		obj->SetRoadNext(nowObj);
-		nowObj->SetRoadPrev(obj);
-
-		// トップに割り込んだらトップを更新
-		if(m_topRoad == nowObj)
-		{
-			m_topRoad = obj;
-		}
+		// 前オブジェクトから連結
+		m_curRoad->SetRoadNext(obj);
+		obj->SetRoadPrev(m_curRoad);
 	}
+
+	// 次オブジェクト初期化
+	obj->SetRoadNext(nullptr);
+	// 終端アドレス設定
+	m_curRoad = obj;
 
 	// 全体カウント
 	m_numRoad++;
@@ -315,10 +278,10 @@ CRoad* CListMapData::GetRoad(unsigned int no)
 //=============================================================================
 void CListMapData::DelRoad(unsigned int no)
 {
-	if(no < m_numRoad)
-	{
-		CRoad* obj = GetRoad(no);
+	CRoad* obj = GetRoad(no);
 
+	if(obj != nullptr)
+	{
 		// リストから破棄
 		UnlinkRoad(obj);
 
@@ -339,47 +302,23 @@ void CListMapData::DelRoad(unsigned int no)
 //=============================================================================
 void CListMapData::LinkStum(unsigned int no, CStumbler* obj)
 {
-	// 後ろ(新た)に追加
-	if(no >= m_numStum)
+	// 先頭チェック
+	if(m_topStum == nullptr)
 	{
-		// 先頭チェック
-		if(m_topStum == nullptr)
-		{
-			m_topStum = obj;
-			obj->SetStumPrev(nullptr);
-		}
-		else
-		{
-			// 前オブジェクトから連結
-			m_curStum->SetStumNext(obj);
-			obj->SetStumPrev(m_curStum);
-		}
-
-		// 次オブジェクト初期化
-		obj->SetStumNext(nullptr);
-		// 終端アドレス設定
-		m_curStum = obj;
+		m_topStum = obj;
+		obj->SetStumPrev(nullptr);
 	}
-
-	// 割り込み
 	else
 	{
-		MessageBox(nullptr, "その番号は既に使われています。\n存在するオブジェクトの前に割り込みます。", "割り込み発生", MB_OK);
-
-		// 現在あるオブジェクトを取得
-		CStumbler* nowObj = GetStum(no);
-
-		// 現在あるオブジェクト前に割り込み
-		obj->SetStumPrev(nowObj->GetStumPrev());
-		obj->SetStumNext(nowObj);
-		nowObj->SetStumPrev(obj);
-
-		// トップに割り込んだらトップを更新
-		if(m_topStum == nowObj)
-		{
-			m_topStum = obj;
-		}
+		// 前オブジェクトから連結
+		m_curStum->SetStumNext(obj);
+		obj->SetStumPrev(m_curStum);
 	}
+
+	// 次オブジェクト初期化
+	obj->SetStumNext(nullptr);
+	// 終端アドレス設定
+	m_curStum = obj;
 
 	// 全体カウント
 	m_numStum++;
@@ -443,10 +382,10 @@ CStumbler* CListMapData::GetStum(unsigned int no)
 //=============================================================================
 void CListMapData::DelStum(unsigned int no)
 {
-	if(no < m_numStum)
-	{
-		CStumbler* obj = GetStum(no);
+	CStumbler* obj = GetStum(no);
 
+	if(obj != nullptr)
+	{
 		// リストから破棄
 		UnlinkStum(obj);
 
@@ -467,47 +406,23 @@ void CListMapData::DelStum(unsigned int no)
 //=============================================================================
 void CListMapData::LinkTarget(unsigned int no, CTarget* obj)
 {
-	// 後ろ(新た)に追加
-	if(no >= m_numTarget)
+	// 先頭チェック
+	if(m_topTarget == nullptr)
 	{
-		// 先頭チェック
-		if(m_topTarget == nullptr)
-		{
-			m_topTarget = obj;
-			obj->SetTargetPrev(nullptr);
-		}
-		else
-		{
-			// 前オブジェクトから連結
-			m_curTarget->SetTargetNext(obj);
-			obj->SetTargetPrev(m_curTarget);
-		}
-
-		// 次オブジェクト初期化
-		obj->SetTargetNext(nullptr);
-		// 終端アドレス設定
-		m_curTarget = obj;
+		m_topTarget = obj;
+		obj->SetTargetPrev(nullptr);
 	}
-
-	// 割り込み
 	else
 	{
-		MessageBox(nullptr, "その番号は既に使われています。\n存在するオブジェクトの前に割り込みます。", "割り込み発生", MB_OK);
-
-		// 現在あるオブジェクトを取得
-		CTarget* nowObj = GetTarget(no);
-
-		// 現在あるオブジェクト前に割り込み
-		obj->SetTargetPrev(nowObj->GetTargetPrev());
-		obj->SetTargetNext(nowObj);
-		nowObj->SetTargetPrev(obj);
-
-		// トップに割り込んだらトップを更新
-		if(m_topTarget == nowObj)
-		{
-			m_topTarget = obj;
-		}
+		// 前オブジェクトから連結
+		m_curTarget->SetTargetNext(obj);
+		obj->SetTargetPrev(m_curTarget);
 	}
+
+	// 次オブジェクト初期化
+	obj->SetTargetNext(nullptr);
+	// 終端アドレス設定
+	m_curTarget = obj;
 
 	// 全体カウント
 	m_numTarget++;
@@ -571,10 +486,10 @@ CTarget* CListMapData::GetTarget(unsigned int no)
 //=============================================================================
 void CListMapData::DelTarget(unsigned int no)
 {
-	if(no < m_numTarget)
-	{
-		CTarget* obj = GetTarget(no);
+	CTarget* obj = GetTarget(no);
 
+	if(obj != nullptr)
+	{
 		// リストから破棄
 		UnlinkTarget(obj);
 
@@ -587,5 +502,43 @@ void CListMapData::DelTarget(unsigned int no)
 	else
 	{
 		MessageBox(nullptr, "その番号は存在しません。", "存在しないオブジェクト", MB_OK);
+	}
+}
+
+//=============================================================================
+// スクロール
+//=============================================================================
+void CListMapData::Scroll(float scroll)
+{
+	// 背景
+	CBackground* bg = m_topBg;
+	while(bg)
+	{
+		bg->Scroll(scroll);
+		bg = bg->GetBgNext();
+	}
+
+	// 道
+	CRoad* road = m_topRoad;
+	while(road)
+	{
+		road->Scroll(scroll);
+		road = road->GetRoadNext();
+	}
+
+	// 障害物
+	CStumbler* stum = m_topStum;
+	while(stum)
+	{
+		stum->Scroll(scroll);
+		stum = stum->GetStumNext();
+	}
+
+	// ターゲット
+	CTarget* target = m_topTarget;
+	while(target)
+	{
+		target->Scroll(scroll);
+		target = target->GetTargetNext();
 	}
 }

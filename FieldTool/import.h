@@ -53,6 +53,13 @@ public:
 		BIRD,
 		DUSTBOX,
 		BARRICADE,
+		CUCTUS,
+		ICEBERG,
+		ICICLE,
+		NUTS,
+		NUTS_REVERSE,
+		SANDSTONE,
+		NEEDLE,
 
 		// ターゲット
 		GOAL,

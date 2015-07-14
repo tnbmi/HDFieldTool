@@ -38,7 +38,7 @@ public:
 	CRoad(int priority = PRIORITY_MAX - 1, OBJTYPE objType = OBJTYPE_2D);
 	~CRoad(){};
 
-	static	CRoad* Create(LPDIRECT3DDEVICE9 device, ROAD_DATA data, POINT_TYPE pointType);
+	static	CRoad* Create(LPDIRECT3DDEVICE9 device, ROAD_DATA data, POINT_TYPE pointType, int page = 0);
 
 	HRESULT	Init(LPDIRECT3DDEVICE9 device, CImport::TEXTURES texture, POINT_TYPE pointType);
 	HRESULT	Init(LPDIRECT3DDEVICE9 device, const char* texture, POINT_TYPE pointType);
@@ -60,10 +60,16 @@ public:
 	void	SetRoadPrev(CRoad* prev){m_prev = prev;}
 	// 前道路ポインタゲット処理
 	CRoad*	GetRoadPrev(void){return m_prev;}
+	// デフォルト位置セット処理
+	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
+	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
 
-protected:
-	CRoad* m_next;						// 次障害物へのポインタ
-	CRoad* m_prev;						// 前障害物へのポインタ
+	void SetData(ROAD_DATA data){m_data = data;}
+
+private:
+	ROAD_DATA	m_data;
+	CRoad*		m_next;	// 次道へのポインタ
+	CRoad*		m_prev;	// 前道へのポインタ
 };
 
 

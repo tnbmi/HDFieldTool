@@ -48,6 +48,8 @@ HRESULT CCreate::Init(LPDIRECT3DDEVICE9 device)
 	//----------------------------
 	// オブジェクト
 	//----------------------------
+	m_page = 0;
+
 	InitObject(device);
 
 	//----------------------------
@@ -103,7 +105,8 @@ void CCreate::Debug(void)
 //=============================================================================
 void CCreate::InitObject(LPDIRECT3DDEVICE9 device)
 {
-
+	// 空
+	CSky* sky = CSky::Create(device);
 }
 
 //=============================================================================
@@ -118,7 +121,7 @@ void CCreate::CreateBg(int no, int category, int type)
 		{
 			// 背景生成
 			BG_DATA data = {(BG_TYPE)(TYPE_FOREST_01 + type), no};
-			CBackground* bg = CBackground::Create(m_device, data);
+			CBackground* bg = CBackground::Create(m_device, data, m_page);
 
 			// マップデータに追加
 			CListMapData::LinkBg(no, bg);
@@ -130,7 +133,7 @@ void CCreate::CreateBg(int no, int category, int type)
 		{
 			// 背景生成
 			BG_DATA data = {(BG_TYPE)(TYPE_TWON_01 + type), no};
-			CBackground* bg = CBackground::Create(m_device, data);
+			CBackground* bg = CBackground::Create(m_device, data, m_page);
 
 			// マップデータに追加
 			CListMapData::LinkBg(no, bg);
@@ -165,7 +168,7 @@ void CCreate::CreateObj(int no, int category, int type, int x, int y)
 		{
 			// オブジェクト生成
 			ROAD_DATA data = {(ROAD_TYPE)type, D3DXVECTOR2((float)x, (float)y)};
-			CRoad* road = CRoad::Create(m_device, data, CScene2D::POINT_LEFTTOP);
+			CRoad* road = CRoad::Create(m_device, data, CScene2D::POINT_LEFTTOP, m_page);
 
 			// マップデータに追加
 			CListMapData::LinkRoad(no, road);
@@ -177,7 +180,7 @@ void CCreate::CreateObj(int no, int category, int type, int x, int y)
 		{
 			// オブジェクト生成
 			STUM_DATA data = {(STUM_TYPE)type, D3DXVECTOR2((float)x, (float)y)};
-			CStumbler* stum = CStumbler::Create(m_device, data, CScene2D::POINT_LEFTTOP);
+			CStumbler* stum = CStumbler::Create(m_device, data, CScene2D::POINT_LEFTTOP, m_page);
 
 			// マップデータに追加
 			CListMapData::LinkStum(no, stum);
@@ -189,7 +192,7 @@ void CCreate::CreateObj(int no, int category, int type, int x, int y)
 		{
 			// オブジェクト生成
 			TARGET_DATA data = {(TARGET_TYPE)type, D3DXVECTOR2((float)x, (float)y)};
-			CTarget* target = CTarget::Create(m_device, data, CScene2D::POINT_LEFTTOP);
+			CTarget* target = CTarget::Create(m_device, data, CScene2D::POINT_LEFTTOP, m_page);
 
 			// マップデータに追加
 			CListMapData::LinkTarget(no, target);
@@ -239,4 +242,32 @@ void CCreate::DeleteObj(int no, int category)
 			break;
 		}
 	}
+}
+
+//=============================================================================
+// スクロール
+//=============================================================================
+void CCreate::Scroll(float scroll)
+{
+	// ページ更新
+	if(scroll < 0)
+	{
+		// 戻る
+		m_page--;
+
+		// 戻れない時
+		if(m_page < 0)
+		{
+			m_page = 0;
+			return;
+		}
+	}
+	else
+	{
+		// 進む
+		m_page++;
+	}
+
+	// スクロール更新
+	CListMapData::Scroll(scroll);
 }

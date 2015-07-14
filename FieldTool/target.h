@@ -40,7 +40,7 @@ public:
 	CTarget(int priority = PRIORITY_MAX - 1, OBJTYPE objType = OBJTYPE_2D);
 	~CTarget(){};
 
-	static	CTarget* Create(LPDIRECT3DDEVICE9 device, TARGET_DATA data, POINT_TYPE pointType);
+	static	CTarget* Create(LPDIRECT3DDEVICE9 device, TARGET_DATA data, POINT_TYPE pointType, int page = 0);
 
 	HRESULT	Init(LPDIRECT3DDEVICE9 device, CImport::TEXTURES texture, POINT_TYPE pointType);
 	HRESULT	Init(LPDIRECT3DDEVICE9 device, const char* texture, POINT_TYPE pointType);
@@ -62,6 +62,9 @@ public:
 
 	bool		GetTargetFrag(void){return m_targetFlag;}
 	void		SetTargetFrag(void){m_targetFlag = true;}
+
+	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
+	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
 
 protected:
 	CTarget* m_next;						// 次ターゲットへのポインタ

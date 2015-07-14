@@ -26,7 +26,7 @@ CStumbler::CStumbler(int priority, OBJTYPE objType) : CScene2D(priority, objType
 //=============================================================================
 // 生成
 //=============================================================================
-CStumbler* CStumbler::Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYPE pointType)
+CStumbler* CStumbler::Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYPE pointType, int page)
 {
 	// 当たり判定大きさリスト
 	D3DXVECTOR2 Size_List[] =
@@ -61,9 +61,10 @@ CStumbler* CStumbler::Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYP
 	CStumbler* pointer = new CStumbler;
 	pointer->Init(device, (CImport::TEXTURES)(CImport::SIGNBOARD + data.type), pointType);
 	// データを元に座標の変更
-	pointer->SetPos(data.Index.x * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
+	pointer->SetPos((data.Index.x - (page * 20)) * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
 	// デフォルト位置セット処理
 	pointer->SetDefPos(pointer->GetPos());
+	pointer->SetPosDef(data.Index.x * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
 	// カラスの時にテクスチャUVの変更
 	if(data.type == TYPE_BIRD)
 	{
@@ -76,6 +77,7 @@ CStumbler* CStumbler::Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYP
 	pointer->SetHitSize(Size_List[data.type]);
 	pointer->SetHitOffset(Offset_List[data.type]);
 	pointer->SetStumType(data.type);
+
 	return pointer;
 }
 

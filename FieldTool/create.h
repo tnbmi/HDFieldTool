@@ -45,9 +45,17 @@ public:
 	void CreateObj(int no, int category, int type, int x, int y);
 	void DeleteObj(int no, int category);
 
+	void Scroll(float scroll);
+
+	// ページ
+	int GetPage(void){return m_page;}
+
 private:
 	void InitObject(LPDIRECT3DDEVICE9 device);
 	void Debug(void);
+
+	// ページ数
+	int m_page;
 
 	//プレイヤー制御
 	CPlayer *m_player;

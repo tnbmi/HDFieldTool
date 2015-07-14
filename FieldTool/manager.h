@@ -48,6 +48,10 @@ public:
 	void CreateObj(int no, int category, int type, int x, int y);
 	void DeleteObj(int no, int category);
 
+	void Scroll(float scroll);
+
+	int GetPage(void);
+
 private:
 	static HWND m_window_handle;
 	CRenderer*	m_renderer;

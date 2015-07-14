@@ -27,7 +27,14 @@ typedef enum{
 	TYPE_LOG_RIGHT,
 	TYPE_BIRD,
 	TYPE_DUSTBOX,
-	TYPE_BARRICADE
+	TYPE_BARRICADE,
+	TYPE_CUCTUS,
+	TYPE_ICEBERG,
+	TYPE_ICICLE,
+	TYPE_NUTS,
+	TYPE_NUTS_REVERSE,
+	TYPE_SANDSTONE,
+	TYPE_NEEDLE,
 }STUM_TYPE;
 
 // 障害物情報
@@ -45,7 +52,7 @@ public:
 	CStumbler(int priority = PRIORITY_MAX - 1, OBJTYPE objType = OBJTYPE_2D);
 	~CStumbler(){};
 
-	static	CStumbler* Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYPE pointType);
+	static	CStumbler* Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYPE pointType, int page = 0);
 
 	HRESULT	Init(LPDIRECT3DDEVICE9 device, CImport::TEXTURES texture, POINT_TYPE pointType);
 	HRESULT	Init(LPDIRECT3DDEVICE9 device, const char* texture, POINT_TYPE pointType);
@@ -75,6 +82,9 @@ public:
 	void		SetStumType(STUM_TYPE type){m_type = type;}
 	// デフォルト位置セット処理
 	void		SetDefPos(D3DXVECTOR2 pos){m_defpos = pos;}
+
+	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
+	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
 
 protected:
 	int			m_life;						// 障害物耐久度

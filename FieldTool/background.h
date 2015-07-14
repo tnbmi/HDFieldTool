@@ -41,7 +41,7 @@ public:
 	CBackground(int priority = 1, OBJTYPE objType = OBJTYPE_2D);
 	~CBackground(){};
 
-	static CBackground* Create(LPDIRECT3DDEVICE9 device, BG_DATA data);
+	static CBackground* Create(LPDIRECT3DDEVICE9 device, BG_DATA data, int page = 0);
 	HRESULT	Init(LPDIRECT3DDEVICE9 device, CImport::TEXTURES texture);
 	void	Uninit(void);
 	void	Update(void);
@@ -55,7 +55,14 @@ public:
 	void		 SetBgPrev(CBackground* prev){m_prev = prev;}
 	CBackground* GetBgPrev(void){return m_prev;}
 
+	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
+	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
+
+	void	SetData(BG_DATA data){m_data = data;}
+	BG_DATA GetData(void){return m_data;}
+
 private:
+	BG_DATA		 m_data;
 	CBackground* m_next;	// 次へのポインタ
 	CBackground* m_prev;	// 前へのポインタ
 };
