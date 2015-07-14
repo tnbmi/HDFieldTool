@@ -66,7 +66,11 @@ public:
 	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
 	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
 
+	void		SetData(TARGET_DATA data){m_data = data;}
+	TARGET_DATA GetData(void){return m_data;}
+
 protected:
+	TARGET_DATA	m_data;
 	CTarget* m_next;						// 次ターゲットへのポインタ
 	CTarget* m_prev;						// 前ターゲットへのポインタ
 	bool m_targetFlag;

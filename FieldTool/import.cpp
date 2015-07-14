@@ -26,22 +26,43 @@ const char* TEX_PATH[] =
 {
 	nullptr,
 
+	// グリッド
+	"./data/TEXTURE/grid.png",
+
 	// 空
 	"./data/TEXTURE/sky/sky_01.png",
-	"./data/TEXTURE/sky/sky_02.png",
-	"./data/TEXTURE/sky/sky_03.png",
-	"./data/TEXTURE/sky/sky_04.png",
-	"./data/TEXTURE/sky/sky_05.png",
 
 	// 森
 	"./data/TEXTURE/forest/forest_01.png",
 
-	// 町
-	"./data/TEXTURE/town/town_01.png",
+	// 水辺
+	"./data/TEXTURE/waterside/waterside_01.png",
+
+	// 砂漠
+	"./data/TEXTURE/desert/desert_01.png",
+	"./data/TEXTURE/desert/desert_02.png",
+	"./data/TEXTURE/desert/desert_03.png",
+
+	// 氷河
+	"./data/TEXTURE/glacier/glacier_01.png",
+	"./data/TEXTURE/glacier/glacier_02.png",
+	"./data/TEXTURE/glacier/glacier_03.png",
+	"./data/TEXTURE/glacier/glacier_04.png",
+	"./data/TEXTURE/glacier/glacier_05.png",
+
+	// サバンナ
+	"./data/TEXTURE/savannah/savannah_01.png",
+	"./data/TEXTURE/savannah/savannah_02.png",
+	"./data/TEXTURE/savannah/savannah_03.png",
+	"./data/TEXTURE/savannah/savannah_04.png",
+	"./data/TEXTURE/savannah/savannah_05.png",
 
 	// 道
 	"./data/TEXTURE/forest/dirt.png",
-	"./data/TEXTURE/town/asphalt.png",
+	"./data/TEXTURE/desert/sand.png",
+	"./data/TEXTURE/glacier/ice.png",
+	"./data/TEXTURE/savannah/grassfield.png",
+	"./data/TEXTURE/waterside/water.png",
 
 	// 障害物
 	"./data/TEXTURE/stumbler/signboard.png",
@@ -59,18 +80,11 @@ const char* TEX_PATH[] =
 	"./data/TEXTURE/stumbler/nuts.png",
 	"./data/TEXTURE/stumbler/nuts_reverse.png",
 	"./data/TEXTURE/stumbler/sandstone.png",
-	"./data/TEXTURE/stumbler/needle.png",
+	"./data/TEXTURE/stumbler/bee.png",
+	"./data/TEXTURE/stumbler/huneycomb.png",
 
 	// ターゲット
 	"./data/TEXTURE/goal/tv_off.png",
-
-	// プレイヤー
-	"./data/TEXTURE/player/player_wait.png",
-	"./data/TEXTURE/player/player_attack.png",
-	"./data/TEXTURE/player/player_light.png",
-
-	// 乗り物
-	"./data/TEXTURE/assy/tram.png",
 };
 
 #define BG_MAX		((TOWN_01 + 1) - FOREST_01)
@@ -159,58 +173,18 @@ void CImport::Uninit(void)
 }
 
 //=============================================================================
-// 背景カテゴリコンボボックスの設定
-//=============================================================================
-void CImport::SetComboBgCategory(HWND wnd, int id)
-{
-	// カテゴリ
-	for(int cnt = 0; cnt < CATEGORY_BG_NUM; ++cnt)
-	{
-		LPCTSTR strItem = TEXT(CATEGORY_BG[cnt]);
-		SendMessage(GetDlgItem(wnd, id), CB_ADDSTRING, 0, (LPARAM)strItem);
-	}
-
-	m_categoryBg = -1;
-}
-
-//=============================================================================
 // 背景タイプコンボボックスの設定
 //=============================================================================
-void CImport::SetComboBgType(HWND wnd, int id, int category)
+void CImport::SetComboBgType(HWND wnd, int id)
 {
-	// カテゴリが変わっている
-	if(m_categoryBg != category)
+	// コンボボックスをクリア
+	SendMessage(GetDlgItem(wnd, id), CB_DELETESTRING, 0, 0);
+
+	// タイプをセット
+	for(int cnt = 0; cnt < BG_NUM; ++cnt)
 	{
-		// コンボボックスをクリア
-		SendMessage(GetDlgItem(wnd, id), CB_DELETESTRING, 0, 0);
-
-		// タイプをセット
-		switch(category)
-		{
-		// 森
-		case 0:
-			for(int cnt = 0; cnt < FOREST_NUM; ++cnt)
-			{
-				LPCTSTR strItem = TEXT(TYPE_FOREST[cnt]);
-				SendMessage(GetDlgItem(wnd, id), CB_ADDSTRING, 0, (LPARAM)strItem);
-			}
-			break;
-
-		// 町
-		case 1:
-			for(int cnt = 0; cnt < TOWN_NUM; ++cnt)
-			{
-				LPCTSTR strItem = TEXT(TYPE_TOWN[cnt]);
-				SendMessage(GetDlgItem(wnd, id), CB_ADDSTRING, 0, (LPARAM)strItem);
-			}
-			break;
-
-		default:
-			break;
-		}
-
-		// 現在のカテゴリをセット
-		m_categoryBg = category;
+		LPCTSTR strItem = TEXT(TYPE_BG[cnt]);
+		SendMessage(GetDlgItem(wnd, id), CB_ADDSTRING, 0, (LPARAM)strItem);
 	}
 }
 
@@ -238,7 +212,7 @@ void CImport::SetComboObjType(HWND wnd, int id, int category)
 	if(m_categoryObj != category)
 	{
 		// コンボボックスをクリア
-		SendMessage(GetDlgItem(wnd, id), CB_DELETESTRING, 0, 0);
+		SendMessage(GetDlgItem(wnd, id), CB_RESETCONTENT, 0, 0);
 
 		// タイプをセット
 		switch(category)

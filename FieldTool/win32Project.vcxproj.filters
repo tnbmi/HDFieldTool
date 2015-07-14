@@ -20,29 +20,17 @@
     <Filter Include="phase">
       <UniqueIdentifier>{1fa324ed-f41a-417b-abb7-0b6f9d9acf19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="object\character">
-      <UniqueIdentifier>{dea42c2b-8d53-4d78-9668-c5bbe592cb29}</UniqueIdentifier>
-    </Filter>
     <Filter Include="import">
       <UniqueIdentifier>{bde76769-a7af-42a1-b536-7d455392063d}</UniqueIdentifier>
     </Filter>
     <Filter Include="object\background">
       <UniqueIdentifier>{1aaec6db-a137-4919-bd63-686988bf7e74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="object\character\player">
-      <UniqueIdentifier>{3bdffeca-7f8a-4747-840a-baba7da01d88}</UniqueIdentifier>
-    </Filter>
     <Filter Include="object\stumbler">
       <UniqueIdentifier>{d08ffa58-4e0d-47ee-8658-d6a224a3ebc9}</UniqueIdentifier>
     </Filter>
     <Filter Include="object\character\player">
       <UniqueIdentifier>{91a77246-88e4-4028-a96a-f6b13ab23745}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="object\character\player\character_vehicle">
-      <UniqueIdentifier>{93159aa8-7507-46d3-a40d-6ccec6ea447a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="object\character\player\character_player">
-      <UniqueIdentifier>{3bdffeca-7f8a-4747-840a-baba7da01d88}</UniqueIdentifier>
     </Filter>
     <Filter Include="object\sky">
       <UniqueIdentifier>{04228886-7ee5-4cc2-a79a-9001cdde358b}</UniqueIdentifier>
@@ -58,9 +46,6 @@
     </Filter>
     <Filter Include="phase\create">
       <UniqueIdentifier>{680737bd-da8b-40b5-9d93-f804936e2705}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="phase\game">
-      <UniqueIdentifier>{fc633cb9-6c6a-43da-b6ff-29ee1c5742a6}</UniqueIdentifier>
     </Filter>
     <Filter Include="object\road">
       <UniqueIdentifier>{224fd8ad-51a6-42cf-aad0-53b33a461513}</UniqueIdentifier>
@@ -121,9 +106,6 @@
     <ClCompile Include="road.cpp">
       <Filter>object\road</Filter>
     </ClCompile>
-    <ClCompile Include="road_manager.cpp">
-      <Filter>object\road</Filter>
-    </ClCompile>
     <ClCompile Include="stumbler.cpp">
       <Filter>object\stumbler</Filter>
     </ClCompile>
@@ -132,15 +114,6 @@
     </ClCompile>
     <ClCompile Include="target.cpp">
       <Filter>object\target</Filter>
-    </ClCompile>
-    <ClCompile Include="target_manager.cpp">
-      <Filter>object\target</Filter>
-    </ClCompile>
-    <ClCompile Include="stum_manager.cpp">
-      <Filter>object\stumbler</Filter>
-    </ClCompile>
-    <ClCompile Include="background_manager.cpp">
-      <Filter>object\background</Filter>
     </ClCompile>
     <ClCompile Include="listMapData.cpp">
       <Filter>object\listMapData</Filter>
@@ -193,9 +166,6 @@
     <ClInclude Include="road.h">
       <Filter>object\road</Filter>
     </ClInclude>
-    <ClInclude Include="road_manager.h">
-      <Filter>object\road</Filter>
-    </ClInclude>
     <ClInclude Include="stumbler.h">
       <Filter>object\stumbler</Filter>
     </ClInclude>
@@ -210,15 +180,6 @@
     </ClInclude>
     <ClInclude Include="target.h">
       <Filter>object\target</Filter>
-    </ClInclude>
-    <ClInclude Include="target_manager.h">
-      <Filter>object\target</Filter>
-    </ClInclude>
-    <ClInclude Include="stum_manager.h">
-      <Filter>object\stumbler</Filter>
-    </ClInclude>
-    <ClInclude Include="background_manager.h">
-      <Filter>object\background</Filter>
     </ClInclude>
     <ClInclude Include="listMapData.h">
       <Filter>object\listMapData</Filter>

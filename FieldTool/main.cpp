@@ -10,6 +10,7 @@
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 #include "main.h"
 #include "resource.h"
+#include "debugproc.h"
 
 #include "manager.h"
 #include "import.h"
@@ -28,22 +29,21 @@
 //----------------------------
 #define CHK_INIT(init)	if(FAILED(init)){return -1;}	// 初期化チェック(WinMain内のみ)
 
+#define TEXT_MAX	(256)
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // プロトタイプ宣言
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
 BOOL	CALLBACK ToolDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-BOOL	CALLBACK BgDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
-BOOL	CALLBACK ObjDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // グローバル変数
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+bool g_initFlg = false;
 CManager* g_manager = nullptr;
 
 HWND g_toolBoxDlgWnd = nullptr;
-HWND g_bgDlgWnd		 = nullptr;
-HWND g_objDlgWnd	 = nullptr;
 
 //=============================================================================
 // メイン関数
@@ -114,6 +114,7 @@ int APIENTRY WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, 
 	//----------------------------
 	// マネージャ
 	g_manager = CManager::Create(instance, wnd, true);
+	g_initFlg = true;
 
 	// フレームカウント
 	timeBeginPeriod(1);				// 分解能を設定
@@ -225,6 +226,48 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		break;
 
 	//----------------------------
+	// 左クリック
+	//----------------------------
+	case WM_LBUTTONDOWN:
+		{
+			// 座標設定
+			POINT pt;
+			GetCursorPos(&pt);		// ディスプレイ上
+			ScreenToClient(wnd, &pt);	// ウィンドウ領域座標にする
+
+			// グリッド計算
+			int gridX = pt.x / 64;
+			int gridY = 10 - ((pt.y - 16) / 64);
+			g_manager->SetGrid(gridX, gridY);
+
+			// オブジェクト生成
+			int category = SendMessage(GetDlgItem(g_toolBoxDlgWnd, COMBO_OBJ_CATEGORY), CB_GETCURSEL, 0, 0);
+			int type	 = SendMessage(GetDlgItem(g_toolBoxDlgWnd, COMBO_OBJ_TYPE), CB_GETCURSEL, 0, 0);
+			g_manager->CreateObj(category, type, gridX, gridY);
+			break;
+		}
+
+	//----------------------------
+	// 右クリック
+	//----------------------------
+	case WM_RBUTTONDOWN:
+		{
+			// 座標設定
+			POINT pt;
+			GetCursorPos(&pt);		// ディスプレイ上
+			ScreenToClient(wnd, &pt);	// ウィンドウ領域座標にする
+
+			// グリッド計算
+			int gridX = pt.x / 64;
+			int gridY = 10 - ((pt.y - 16) / 64);
+			g_manager->SetGrid(gridX, gridY);
+
+			// オブジェクト生成
+			g_manager->DeleteObj(gridX, gridY);
+			break;
+		}
+
+	//----------------------------
 	// キーボード処理
 	//----------------------------
 	case WM_KEYDOWN:
@@ -249,6 +292,17 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 //=============================================================================
 BOOL CALLBACK ToolDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	//----------------------------
+	// コンボボックス初期化
+	//----------------------------
+	if(g_initFlg)
+	{
+		CImport* import = g_manager->GetImport();
+		import->SetComboBgType(wnd, COMBO_BG_TYPE);
+		import->SetComboObjCategory(wnd, COMBO_OBJ_CATEGORY);
+		g_initFlg = false;
+	}
+
 	switch(msg)
 	{
 	//----------------------------
@@ -256,7 +310,7 @@ BOOL CALLBACK ToolDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	//----------------------------
 	case WM_INITDIALOG:
 		{
-			SetDlgItemInt(wnd, EDIT_PAGE, 0, false);
+			SetDlgItemInt(wnd, EDIT_PAGE,	0, false);
 			return TRUE;
 		}
 
@@ -265,6 +319,7 @@ BOOL CALLBACK ToolDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	//----------------------------
 	case WM_COMMAND:
 		{
+			//=============================================
 			switch(LOWORD(wParam))
 			{
 			// キャンセルボタン
@@ -273,29 +328,65 @@ BOOL CALLBACK ToolDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				g_toolBoxDlgWnd = nullptr;
 				break;
 
-			// 背景ボタン
-			case BTN_BG:
-				if(g_bgDlgWnd == nullptr)
+			// 読み込み
+			case BTN_LOAD:
 				{
-					g_bgDlgWnd = CreateDialog((HINSTANCE)GetWindowLong(wnd, GWL_HINSTANCE),
-												MAKEINTRESOURCE(DIALOG_BG),
-												wnd,
-												BgDlgProc);
-					ShowWindow(g_bgDlgWnd, SW_SHOW);
-				}
-				break;
+					OPENFILENAME ofn = {0};
+					char		 defDir[MAX_PATH]	= {0};
+					char		 file[MAX_PATH]		= {0};
+					char		 fileName[MAX_PATH] = {0};
 
-			// オブジェクトボタン
-			case BTN_OBJ:
-				if(g_objDlgWnd == nullptr)
-				{
-					g_objDlgWnd = CreateDialog((HINSTANCE)GetWindowLong(wnd, GWL_HINSTANCE),
-												MAKEINTRESOURCE(DIALOG_OBJ),
-												wnd,
-												ObjDlgProc);
-					ShowWindow(g_objDlgWnd, SW_SHOW);
+					// カレントディレクトリ取得
+					GetCurrentDirectory(MAX_PATH, &defDir[0]);
+
+					// オープンファイルの設定
+					ofn.lStructSize		= sizeof(OPENFILENAME);
+					ofn.hwndOwner		= wnd;
+					ofn.lpstrInitialDir	= defDir;
+					ofn.lpstrFilter		= "テキスト(*.txt)\0*.txt\0";
+					ofn.lpstrFile		= file;
+					ofn.nMaxFile		= MAX_PATH;
+					ofn.lpstrFileTitle	= fileName;
+					ofn.nMaxFileTitle	= MAX_PATH;
+					ofn.Flags			= OFN_PATHMUSTEXIST;
+					ofn.lpstrDefExt		= "txt";
+
+					if(GetOpenFileName(&ofn))
+					{
+						g_manager->LoadMap(g_manager, ofn.lpstrFile, ofn.lpstrFileTitle);
+					}
+					break;
 				}
-				break;
+
+			// 保存
+			case BTN_SAVE:
+				{
+					OPENFILENAME ofn = {0};
+					char		 defDir[MAX_PATH]	= {0};
+					char		 file[MAX_PATH]		= {0};
+					char		 fileName[MAX_PATH] = {0};
+
+					// カレントディレクトリ取得
+					GetCurrentDirectory(MAX_PATH, &defDir[0]);
+
+					// オープンファイルの設定
+					ofn.lStructSize		= sizeof(OPENFILENAME);
+					ofn.hwndOwner		= wnd;
+					ofn.lpstrInitialDir	= defDir;
+					ofn.lpstrFilter		= "テキスト(*.txt)\0*.txt\0";
+					ofn.lpstrFile		= file;
+					ofn.nMaxFile		= MAX_PATH;
+					ofn.lpstrFileTitle	= fileName;
+					ofn.nMaxFileTitle	= MAX_PATH;
+					ofn.Flags			= OFN_PATHMUSTEXIST;
+					ofn.lpstrDefExt		= "txt";
+
+					if(GetSaveFileName(&ofn))
+					{
+						g_manager->SaveMap(ofn.lpstrFile, ofn.lpstrFileTitle);
+					}
+					break;
+				}
 
 			// 左スクロールボタン
 			case BTN_SCROLL_L:
@@ -308,145 +399,33 @@ BOOL CALLBACK ToolDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				g_manager->Scroll((float)SCREEN_WIDTH);
 				SetDlgItemInt(wnd, EDIT_PAGE, g_manager->GetPage(), false);
 				break;
-			}
 
-			break;
-		}
-	}
-
-	return FALSE;
-}
-
-//=============================================================================
-// 背景ダイアログプロシージャ
-//=============================================================================
-BOOL CALLBACK BgDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	switch(msg)
-	{
-	//----------------------------
-	// 初期化
-	//----------------------------
-	case WM_INITDIALOG:
-		{
-			SetDlgItemInt(wnd, BG_NO, 0, false);
-			g_manager->GetImport()->SetComboBgCategory(wnd, COMBO_CATEGORY);
-			return TRUE;
-		}
-
-	//----------------------------
-	// コマンド
-	//----------------------------
-	case WM_COMMAND:
-		{
-			switch(LOWORD(wParam))
-			{
-				// キャンセルボタン
-				case IDCANCEL:
+			// 背景セットボタン
+			case BTN_BG_SET:
 				{
-					DestroyWindow(wnd);
-					g_bgDlgWnd = nullptr;
+					int no	 = GetDlgItemInt(wnd, EDIT_PAGE, false, false);
+					int type = SendMessage(GetDlgItem(wnd, COMBO_TYPE), CB_GETCURSEL, 0, 0);
+					g_manager->CreateBg(no, type);
 					break;
 				}
 
-				// セットボタン
-				case BTN_SET:
+			// 背景削除ボタン
+			case BTN_BG_DEL:
 				{
-					int no = GetDlgItemInt(wnd, BG_NO, false, false);
-					int category = SendMessage(GetDlgItem(wnd, COMBO_CATEGORY), CB_GETCURSEL, 0, 0);
-					int type	 = SendMessage(GetDlgItem(wnd, COMBO_TYPE), CB_GETCURSEL, 0, 0);
-					g_manager->CreateBg(no, category, type);
-					break;
-				}
-
-				// 削除ボタン
-				case BTN_DEL:
-				{
-					int no = GetDlgItemInt(wnd, BG_NO, false, false);
+					int no = GetDlgItemInt(wnd, EDIT_PAGE, false, false);
 					g_manager->DeleteBg(no);
 					break;
 				}
 			}
 
+			//=============================================
 			switch(HIWORD(wParam))
 			{
 			// コンボボックス選択変更
 			case CBN_SELENDOK:
-				int category = SendMessage(GetDlgItem(wnd, COMBO_CATEGORY), CB_GETCURSEL, 0, 0);
-				g_manager->GetImport()->SetComboBgType(wnd, COMBO_TYPE, category);
+				int category = SendMessage(GetDlgItem(wnd, COMBO_OBJ_CATEGORY), CB_GETCURSEL, 0, 0);
+				g_manager->GetImport()->SetComboObjType(wnd, COMBO_OBJ_TYPE, category);
 				break;
-
-			}
-
-			break;
-		}
-	}
-
-	return FALSE;
-}
-
-//=============================================================================
-// オブジェクトダイアログプロシージャ
-//=============================================================================
-BOOL CALLBACK ObjDlgProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
-{
-	switch(msg)
-	{
-	//----------------------------
-	// 初期化
-	//----------------------------
-	case WM_INITDIALOG:
-		{
-			SetDlgItemInt(wnd, OBJ_NO, 0, false);
-			g_manager->GetImport()->SetComboObjCategory(wnd, COMBO_CATEGORY);
-			return TRUE;
-		}
-
-	//----------------------------
-	// コマンド
-	//----------------------------
-	case WM_COMMAND:
-		{
-			switch(LOWORD(wParam))
-			{
-				// キャンセルボタン
-				case IDCANCEL:
-				{
-					DestroyWindow(wnd);
-					g_objDlgWnd = nullptr;
-					break;
-				}
-
-				// セットボタン
-				case BTN_SET:
-				{
-					int no = GetDlgItemInt(wnd, OBJ_NO, false, false);
-					int category = SendMessage(GetDlgItem(wnd, COMBO_CATEGORY), CB_GETCURSEL, 0, 0);
-					int type	 = SendMessage(GetDlgItem(wnd, COMBO_TYPE), CB_GETCURSEL, 0, 0);
-					int x = GetDlgItemInt(wnd, OBJ_X, false, false);
-					int y = GetDlgItemInt(wnd, OBJ_Y, false, false);
-					g_manager->CreateObj(no, category, type, x, y);
-					break;
-				}
-
-				// 削除ボタン
-				case BTN_DEL:
-				{
-					int no = GetDlgItemInt(wnd, OBJ_NO, false, false);
-					int category = SendMessage(GetDlgItem(wnd, COMBO_CATEGORY), CB_GETCURSEL, 0, 0);
-					g_manager->DeleteObj(no, category);
-					break;
-				}
-			}
-
-			switch(HIWORD(wParam))
-			{
-			// コンボボックス選択変更
-			case CBN_SELENDOK:
-				int category = SendMessage(GetDlgItem(wnd, COMBO_CATEGORY), CB_GETCURSEL, 0, 0);
-				g_manager->GetImport()->SetComboObjType(wnd, COMBO_TYPE, category);
-				break;
-
 			}
 
 			break;

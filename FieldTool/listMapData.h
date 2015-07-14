@@ -23,6 +23,8 @@ class CRoad;
 class CStumbler;
 class CTarget;
 
+class CManager;
+
 class CListMapData
 {
 public:
@@ -32,29 +34,36 @@ public:
 	// 背景
 	static void			LinkBg(unsigned int no, CBackground* obj);
 	static void			UnlinkBg(CBackground* obj);
-	static CBackground* GetBg(unsigned int no);
 	static void			DelBg(unsigned int no);
+	static CBackground* GetBg(unsigned int no);
 
 	// 道
-	static void	  LinkRoad(unsigned int no, CRoad* obj);
+	static void	  LinkRoad(CRoad* obj);
 	static void	  UnlinkRoad(CRoad* obj);
+	static void	  DelRoad(CRoad* obj);
 	static CRoad* GetRoad(unsigned int no);
-	static void	  DelRoad(unsigned int no);
 
 	// 障害物
-	static void		  LinkStum(unsigned int no, CStumbler* obj);
+	static void		  LinkStum(CStumbler* obj);
 	static void		  UnlinkStum(CStumbler* obj);
+	static void		  DelStum(CStumbler* obj);
 	static CStumbler* GetStum(unsigned int no);
-	static void		  DelStum(unsigned int no);
 
 	// ターゲット
-	static void		LinkTarget(unsigned int no, CTarget* obj);
+	static void		LinkTarget(CTarget* obj);
 	static void		UnlinkTarget(CTarget* obj);
+	static void		DelTarget(CTarget* obj);
 	static CTarget* GetTarget(unsigned int no);
-	static void		DelTarget(unsigned int no);
 
 	// 全体スクロール
 	static void Scroll(float scroll);
+
+	// グリッドオブジェクト探索
+	static int GridChk(int x, int y, CScene2D** obj);
+
+	// ファイル処理
+	static void LoadMap(CManager* manager, const char* filePath, const char* fileName);
+	static void SaveMap(const char* filePath, const char* fileName);
 
 private:
 	// 背景

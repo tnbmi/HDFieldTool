@@ -22,26 +22,47 @@ class CMapData;
 class CImport
 {
 public:
-	typedef enum
+	enum TEXTURES
 	{
 		NONE = 0,
 
+		// グリッド
+		GRID,
+
 		// 空
 		SKY1,
-		SKY2,
-		SKY3,
-		SKY4,
-		SKY5,
 
 		// 森
 		FOREST_01,
 
-		// 町
-		TOWN_01,
+		// 水辺
+		WATERSIDE_01,
+
+		// 砂漠
+		DESERT_01,
+		DESERT_02,
+		DESERT_03,
+
+		// 氷河
+		GLACIER_01,
+		GLACIER_02,
+		GLACIER_03,
+		GLACIER_04,
+		GLACIER_05,
+
+		// サバンナ
+		SAVANNAH_01,
+		SAVANNAH_02,
+		SAVANNAH_03,
+		SAVANNAH_04,
+		SAVANNAH_05,
 
 		// 道
 		DIRT,
-		ASPHALT,
+		SAND,
+		ICE,
+		GRASSFIELD,
+		WATER,
 
 		// 障害物
 		SIGNBOARD,
@@ -59,21 +80,14 @@ public:
 		NUTS,
 		NUTS_REVERSE,
 		SANDSTONE,
-		NEEDLE,
+		BEE,
+		HUNEYCOMB,
 
 		// ターゲット
 		GOAL,
 
-		// プレイヤー
-		PLAYER_WAIT,
-		PLAYER_ATTACK,
-		PLAYER_LIGHT,
-
-		// 乗り物
-		ASSY_TRAM,
-
 		TEX_MAX,
-	} TEXTURES;
+	};
 
 	enum MAPS
 	{
@@ -92,8 +106,7 @@ public:
 	static LPDIRECT3DTEXTURE9	GetTexture(TEXTURES tex){return m_tex[tex];}
 	static CMapData*			GetMap(MAPS map){return m_map[map];}
 
-	void SetComboBgCategory(HWND wnd, int id);
-	void SetComboBgType(HWND wnd, int id, int category);
+	void SetComboBgType(HWND wnd, int id);
 	void SetComboObjCategory(HWND wnd, int id);
 	void SetComboObjType(HWND wnd, int id, int category);
 

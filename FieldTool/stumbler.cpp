@@ -77,6 +77,7 @@ CStumbler* CStumbler::Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYP
 	pointer->SetHitSize(Size_List[data.type]);
 	pointer->SetHitOffset(Offset_List[data.type]);
 	pointer->SetStumType(data.type);
+	pointer->SetData(data);
 
 	return pointer;
 }

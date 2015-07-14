@@ -86,7 +86,11 @@ public:
 	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
 	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
 
+	void	  SetData(STUM_DATA data){m_data = data;}
+	STUM_DATA GetData(void){return m_data;}
+
 protected:
+	STUM_DATA	m_data;
 	int			m_life;						// 障害物耐久度
 	CStumbler*	m_next;						// 次障害物へのポインタ
 	CStumbler*	m_prev;						// 前障害物へのポインタ

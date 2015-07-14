@@ -64,7 +64,8 @@ public:
 	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
 	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
 
-	void SetData(ROAD_DATA data){m_data = data;}
+	void	  SetData(ROAD_DATA data){m_data = data;}
+	ROAD_DATA GetData(void){return m_data;}
 
 private:
 	ROAD_DATA	m_data;

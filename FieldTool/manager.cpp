@@ -33,7 +33,8 @@ HWND	CManager::m_window_handle = nullptr;
 //=============================================================================
 CManager::CManager(void)
 {
-
+	m_grid[0] = 0;
+	m_grid[1] = 0;
 }
 
 //=============================================================================
@@ -150,6 +151,7 @@ void CManager::Update(void)
 #ifdef _DEBUG
 	// FPS更新
 	m_debugproc->PrintDebugProc("FPS:%d\n", m_renderer->GetFPS());
+	m_debugproc->PrintDebugProc("***グリッド*****\nX:%d Y:%d", m_grid[0], m_grid[1]);
 #endif
 
 	// 入力
@@ -213,11 +215,11 @@ void CManager::CalculateFPS(DWORD frameCnt, DWORD curTime, DWORD FPSLastTime)
 //=============================================================================
 // 背景生成
 //=============================================================================
-void CManager::CreateBg(int no, int category, int type)
+void CManager::CreateBg(int no, int type)
 {
 	if(m_phase != nullptr)
 	{
-		m_phase->CreateBg(no, category, type);
+		m_phase->CreateBg(no, type);
 	}
 }
 
@@ -235,22 +237,22 @@ void CManager::DeleteBg(int no)
 //=============================================================================
 // オブジェクト生成
 //=============================================================================
-void CManager::CreateObj(int no, int category, int type, int x, int y)
+void CManager::CreateObj(int category, int type, int x, int y)
 {
 	if(m_phase != nullptr)
 	{
-		m_phase->CreateObj(no, category, type, x, y);
+		m_phase->CreateObj(category, type, x, y);
 	}
 }
 
 //=============================================================================
 // オブジェクト削除
 //=============================================================================
-void CManager::DeleteObj(int no, int category)
+void CManager::DeleteObj(int x, int y)
 {
 	if(m_phase != nullptr)
 	{
-		m_phase->DeleteObj(no, category);
+		m_phase->DeleteObj(x, y);
 	}
 }
 
@@ -271,4 +273,20 @@ void CManager::Scroll(float scroll)
 int CManager::GetPage(void)
 {
 	return m_phase->GetPage();
+}
+
+//=============================================================================
+// マップ読み込み
+//=============================================================================
+void CManager::LoadMap(CManager* manager, const char* filePath, const char* fileName)
+{
+	m_phase->LoadMap(manager, filePath, fileName);
+}
+
+//=============================================================================
+// マップセーブ
+//=============================================================================
+void CManager::SaveMap(const char* filePath, const char* fileName)
+{
+	m_phase->SaveMap(filePath, fileName);
 }

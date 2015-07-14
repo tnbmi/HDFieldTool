@@ -21,6 +21,8 @@ class CFade;
 class CInputKeyboard;
 class CInputMouse;
 
+class CManager;
+
 class CPhase
 {
 public:
@@ -37,15 +39,18 @@ public:
 	void SetKeyboard(CInputKeyboard* keyboard){m_keyboard = keyboard;}
 	void SetMouse(CInputMouse* mouse){m_mouse = mouse;}
 
-	virtual void CreateBg(int no, int category, int type){}
+	virtual void CreateBg(int no, int type){}
 	virtual void DeleteBg(int no){}
 
-	virtual void CreateObj(int no, int category, int type, int x, int y){}
-	virtual void DeleteObj(int no, int category){}
+	virtual void CreateObj(int category, int type, int x, int y){}
+	virtual void DeleteObj(int x, int y){}
 
 	virtual void Scroll(float scroll){}
 
 	virtual int GetPage(void){return 0;}
+
+	virtual void LoadMap(CManager* manager, const char* filePath, const char* fileName){}
+	virtual void SaveMap(const char* filePath, const char* fileName){}
 
 protected:
 	LPDIRECT3DDEVICE9 m_device;	// Deviceオブジェクト(デバイスへのポインタ)

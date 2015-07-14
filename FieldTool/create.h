@@ -28,6 +28,8 @@ class CBackground;
 class CScene2D;
 class CGoal;
 
+class CManager;
+
 class CCreate : CPhase
 {
 public:
@@ -39,16 +41,21 @@ public:
 	void	Update(void);
 	void	Draw(void);
 
-	void CreateBg(int no, int category, int type);
+	void CreateBg(int no, int type);
 	void DeleteBg(int no);
 
-	void CreateObj(int no, int category, int type, int x, int y);
-	void DeleteObj(int no, int category);
+	void CreateObj(int category, int type, int x, int y);
+	void DeleteObj(int x, int y);
 
+	// スクロール
 	void Scroll(float scroll);
 
 	// ページ
 	int GetPage(void){return m_page;}
+
+	// ファイル処理
+	void LoadMap(CManager* manager, const char* filePath, const char* fileName);
+	void SaveMap(const char* filePath, const char* fileName);
 
 private:
 	void InitObject(LPDIRECT3DDEVICE9 device);

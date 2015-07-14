@@ -27,6 +27,8 @@
 #include "stumbler.h"
 #include "target.h"
 
+#include "manager.h"
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // マクロ
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -107,44 +109,23 @@ void CCreate::InitObject(LPDIRECT3DDEVICE9 device)
 {
 	// 空
 	CSky* sky = CSky::Create(device);
+
+	// グリッド
+	CScene2D* grid = CScene2D::Create(device, CImport::GRID, CScene2D::POINT_LEFTTOP, PRIORITY_MAX-1);
+	grid->SetSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 }
 
 //=============================================================================
 // 背景生成
 //=============================================================================
-void CCreate::CreateBg(int no, int category, int type)
+void CCreate::CreateBg(int no, int type)
 {
-	switch(category)
-	{
-		// 森
-		case 0:
-		{
-			// 背景生成
-			BG_DATA data = {(BG_TYPE)(TYPE_FOREST_01 + type), no};
-			CBackground* bg = CBackground::Create(m_device, data, m_page);
+	// 背景生成
+	BG_DATA data = {(BG_TYPE)(TYPE_FOREST_01 + type), no};
+	CBackground* bg = CBackground::Create(m_device, data, m_page);
 
-			// マップデータに追加
-			CListMapData::LinkBg(no, bg);
-			break;
-		}
-
-		// 町
-		case 1:
-		{
-			// 背景生成
-			BG_DATA data = {(BG_TYPE)(TYPE_TWON_01 + type), no};
-			CBackground* bg = CBackground::Create(m_device, data, m_page);
-
-			// マップデータに追加
-			CListMapData::LinkBg(no, bg);
-			break;
-		}
-
-		default:
-		{
-			break;
-		}
-	}
+	// マップデータに追加
+	CListMapData::LinkBg(no, bg);
 }
 
 //=============================================================================
@@ -159,7 +140,7 @@ void CCreate::DeleteBg(int no)
 //=============================================================================
 // オブジェクト生成
 //=============================================================================
-void CCreate::CreateObj(int no, int category, int type, int x, int y)
+void CCreate::CreateObj(int category, int type, int x, int y)
 {
 	switch(category)
 	{
@@ -171,7 +152,7 @@ void CCreate::CreateObj(int no, int category, int type, int x, int y)
 			CRoad* road = CRoad::Create(m_device, data, CScene2D::POINT_LEFTTOP, m_page);
 
 			// マップデータに追加
-			CListMapData::LinkRoad(no, road);
+			CListMapData::LinkRoad(road);
 			break;
 		}
 
@@ -183,7 +164,7 @@ void CCreate::CreateObj(int no, int category, int type, int x, int y)
 			CStumbler* stum = CStumbler::Create(m_device, data, CScene2D::POINT_LEFTTOP, m_page);
 
 			// マップデータに追加
-			CListMapData::LinkStum(no, stum);
+			CListMapData::LinkStum(stum);
 			break;
 		}
 
@@ -195,7 +176,7 @@ void CCreate::CreateObj(int no, int category, int type, int x, int y)
 			CTarget* target = CTarget::Create(m_device, data, CScene2D::POINT_LEFTTOP, m_page);
 
 			// マップデータに追加
-			CListMapData::LinkTarget(no, target);
+			CListMapData::LinkTarget(target);
 			break;
 		}
 
@@ -209,15 +190,18 @@ void CCreate::CreateObj(int no, int category, int type, int x, int y)
 //=============================================================================
 // オブジェクト削除
 //=============================================================================
-void CCreate::DeleteObj(int no, int category)
+void CCreate::DeleteObj(int x, int y)
 {
+	CScene2D** obj = new CScene2D*;
+	int category = CListMapData::GridChk(x, y, obj);
+
 	switch(category)
 	{
 		// 道
 		case 0:
 		{
 			// マップデータを削除
-			CListMapData::DelRoad(no);
+			CListMapData::DelRoad((CRoad*)*obj);
 			break;
 		}
 
@@ -225,7 +209,7 @@ void CCreate::DeleteObj(int no, int category)
 		case 1:
 		{
 			// マップデータを削除
-			CListMapData::DelStum(no);
+			CListMapData::DelStum((CStumbler*)*obj);
 			break;
 		}
 
@@ -233,7 +217,7 @@ void CCreate::DeleteObj(int no, int category)
 		case 2:
 		{
 			// マップデータを削除
-			CListMapData::DelTarget(no);
+			CListMapData::DelTarget((CTarget*)*obj);
 			break;
 		}
 
@@ -270,4 +254,20 @@ void CCreate::Scroll(float scroll)
 
 	// スクロール更新
 	CListMapData::Scroll(scroll);
+}
+
+//=============================================================================
+// マップ読み込み
+//=============================================================================
+void CCreate::LoadMap(CManager* manager, const char* filePath, const char* fileName)
+{
+	CListMapData::LoadMap(manager, filePath, fileName);
+}
+
+//=============================================================================
+// マップセーブ
+//=============================================================================
+void CCreate::SaveMap(const char* filePath, const char* fileName)
+{
+	CListMapData::SaveMap(filePath, fileName);
 }

@@ -42,15 +42,24 @@ public:
 	static void SetNextPhase(CPhase* phase){m_phaseNext = phase;}
 	static HWND GetWindowHandle(){ return m_window_handle; }
 
-	void CreateBg(int no, int category, int type);
+	void CreateBg(int no, int type);
 	void DeleteBg(int no);
 
-	void CreateObj(int no, int category, int type, int x, int y);
-	void DeleteObj(int no, int category);
+	void CreateObj(int category, int type, int x, int y);
+	void DeleteObj(int x, int y);
 
+	// スクロール
 	void Scroll(float scroll);
 
+	// ページ
 	int GetPage(void);
+
+	// ファイル処理
+	void LoadMap(CManager* manager, const char* filePath, const char* fileName);
+	void SaveMap(const char* filePath, const char* fileName);
+
+	// グリッド
+	void SetGrid(int x, int y){m_grid[0] = x; m_grid[1] = y;}
 
 private:
 	static HWND m_window_handle;
@@ -62,6 +71,8 @@ private:
 	static CPhase*	m_phaseNext;
 
 	CInputKeyboard*	m_keyboard;
+
+	int m_grid[2];
 };
 
 //=============================================================================
