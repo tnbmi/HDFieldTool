@@ -542,6 +542,31 @@ void CListMapData::Scroll(float scroll)
 int CListMapData::GridChk(int x, int y, CScene2D** obj)
 {
 	// “¹’Tõ
+	if(GridChkRoad(x, y, (CRoad**)obj))
+	{
+		return 0;
+	}
+
+	// áŠQ•¨’Tõ
+	if(GridChkStum(x, y, (CStumbler**)obj))
+	{
+		return 1;
+	}
+
+	// ƒ^[ƒQƒbƒg’Tõ
+	if(GridChkTarget(x, y, (CTarget**)obj))
+	{
+		return 2;
+	}
+
+	return -1;
+}
+
+//=============================================================================
+// ƒOƒŠƒbƒh“¹’Tõ
+//=============================================================================
+bool CListMapData::GridChkRoad(int x, int y, CRoad** obj)
+{
 	CRoad*	  road = nullptr;
 	ROAD_DATA roadData;
 	for(unsigned int cnt = 0; cnt < m_numRoad; ++cnt)
@@ -553,11 +578,18 @@ int CListMapData::GridChk(int x, int y, CScene2D** obj)
 		if(roadData.Index.x == x && roadData.Index.y == y)
 		{
 			*obj = road;
-			return 0;
+			return true;
 		}
 	}
 
-	// áŠQ•¨’Tõ
+	return false;
+}
+
+//=============================================================================
+// ƒOƒŠƒbƒháŠQ•¨’Tõ
+//=============================================================================
+bool CListMapData::GridChkStum(int x, int y, CStumbler** obj)
+{
 	CStumbler*	stum = nullptr;
 	STUM_DATA	stumData;
 	for(unsigned int cnt = 0; cnt < m_numStum; ++cnt)
@@ -569,11 +601,18 @@ int CListMapData::GridChk(int x, int y, CScene2D** obj)
 		if(stumData.Index.x == x && stumData.Index.y == y)
 		{
 			*obj = stum;
-			return 1;
+			return true;
 		}
 	}
 
-	// ƒ^[ƒQƒbƒg’Tõ
+	return false;
+}
+
+//=============================================================================
+// ƒOƒŠƒbƒhƒ^[ƒQƒbƒg’Tõ
+//=============================================================================
+bool CListMapData::GridChkTarget(int x, int y, CTarget** obj)
+{
 	CTarget*	target = nullptr;
 	TARGET_DATA	targetData;
 	for(unsigned int cnt = 0; cnt < m_numTarget; ++cnt)
@@ -589,7 +628,7 @@ int CListMapData::GridChk(int x, int y, CScene2D** obj)
 		}
 	}
 
-	return -1;
+	return false;
 }
 
 //=============================================================================
