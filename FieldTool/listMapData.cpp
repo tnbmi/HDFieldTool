@@ -181,12 +181,15 @@ CBackground* CListMapData::GetBg(unsigned int no)
 	// 任意の数まで進む
 	for(unsigned int cnt = 0; cnt < m_numBg; ++cnt)
 	{
-		if(obj->GetData().index == no)
+		if(obj != nullptr)
 		{
-			return obj;
-		}
+			if(obj->GetData().index == no)
+			{
+				return obj;
+			}
 
-		obj = obj->GetBgNext();
+			obj = obj->GetBgNext();
+		}
 	}
 
 	return nullptr;
@@ -288,7 +291,10 @@ CRoad* CListMapData::GetRoad(unsigned int no)
 	// 任意の数まで進む
 	for(unsigned int cnt = 0; cnt < no; ++cnt)
 	{
-		obj = obj->GetRoadNext();
+		if(obj != nullptr)
+		{
+			obj = obj->GetRoadNext();
+		}
 	}
 
 	return obj;
@@ -390,7 +396,10 @@ CStumbler* CListMapData::GetStum(unsigned int no)
 	// 任意の数まで進む
 	for(unsigned int cnt = 0; cnt < no; ++cnt)
 	{
-		obj = obj->GetStumNext();
+		if(obj != nullptr)
+		{
+			obj = obj->GetStumNext();
+		}
 	}
 
 	return obj;
@@ -492,7 +501,10 @@ CTarget* CListMapData::GetTarget(unsigned int no)
 	// 任意の数まで進む
 	for(unsigned int cnt = 0; cnt < no; ++cnt)
 	{
-		obj = obj->GetTargetNext();
+		if(obj != nullptr)
+		{
+			obj = obj->GetTargetNext();
+		}
 	}
 
 	return obj;
@@ -571,14 +583,16 @@ bool CListMapData::GridChkRoad(int x, int y, CRoad** obj)
 	ROAD_DATA roadData;
 	for(unsigned int cnt = 0; cnt < m_numRoad; ++cnt)
 	{
-		road	 = GetRoad(cnt);
-		roadData = road->GetData();
-
-		// グリッドが等しい
-		if(roadData.Index.x == x && roadData.Index.y == y)
+		road = GetRoad(cnt);
+		if(road != nullptr)
 		{
-			*obj = road;
-			return true;
+			roadData = road->GetData();
+			// グリッドが等しい
+			if(roadData.Index.x == x && roadData.Index.y == y)
+			{
+				*obj = road;
+				return true;
+			}
 		}
 	}
 
@@ -594,14 +608,16 @@ bool CListMapData::GridChkStum(int x, int y, CStumbler** obj)
 	STUM_DATA	stumData;
 	for(unsigned int cnt = 0; cnt < m_numStum; ++cnt)
 	{
-		stum	 = GetStum(cnt);
-		stumData = stum->GetData();
-
-		// グリッドが等しい
-		if(stumData.Index.x == x && stumData.Index.y == y)
+		stum = GetStum(cnt);
+		if(stum != nullptr)
 		{
-			*obj = stum;
-			return true;
+			stumData = stum->GetData();
+			// グリッドが等しい
+			if(stumData.Index.x == x && stumData.Index.y == y)
+			{
+				*obj = stum;
+				return true;
+			}
 		}
 	}
 
@@ -617,14 +633,16 @@ bool CListMapData::GridChkTarget(int x, int y, CTarget** obj)
 	TARGET_DATA	targetData;
 	for(unsigned int cnt = 0; cnt < m_numTarget; ++cnt)
 	{
-		target	 = GetTarget(cnt);
-		targetData = target->GetData();
-
-		// グリッドが等しい
-		if(targetData.Index.x == x && targetData.Index.y == y)
+		target = GetTarget(cnt);
+		if(target != nullptr)
 		{
-			*obj = target;
-			return 2;
+			targetData = target->GetData();
+			// グリッドが等しい
+			if(targetData.Index.x == x && targetData.Index.y == y)
+			{
+				*obj = target;
+				return 2;
+			}
 		}
 	}
 
@@ -638,7 +656,6 @@ void CListMapData::LoadMap(CManager* manager, const char* filePath, const char* 
 {
 	char c;
 	int cnt;
-	int cate;
 	int type;
 	D3DXVECTOR2 index;
 

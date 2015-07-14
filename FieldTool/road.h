@@ -64,9 +64,6 @@ public:
 	void	SetRoadPrev(CRoad* prev){m_prev = prev;}
 	// 前道路ポインタゲット処理
 	CRoad*	GetRoadPrev(void){return m_prev;}
-	// デフォルト位置セット処理
-	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
-	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
 
 	void	  SetData(ROAD_DATA data){m_data = data;}
 	ROAD_DATA GetData(void){return m_data;}

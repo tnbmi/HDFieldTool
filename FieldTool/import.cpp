@@ -87,9 +87,6 @@ const char* TEX_PATH[] =
 	"./data/TEXTURE/goal/tv_off.png",
 };
 
-#define BG_MAX		((TOWN_01 + 1) - FOREST_01)
-#define OBJ_MAX	((GOAL_OFF + 1) - DIRT)
-
 // ƒ}ƒbƒv
 const char* MAP_PATH[] =
 {

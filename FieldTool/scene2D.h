@@ -66,10 +66,6 @@ public:
 	// 当たり判定座標オフセット値セット処理
 	void	SetHitOffset(D3DXVECTOR2 offset){m_hitOffset = offset;}
 
-	// デフォルトポジションの設定
-	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
-	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
-
 protected:
 	void SetVertexPolygon(void);
 	void DrawHitBox(void);

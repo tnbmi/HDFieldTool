@@ -75,10 +75,9 @@ CStumbler* CStumbler::Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYP
 	CStumbler* pointer = new CStumbler;
 	pointer->Init(device, (CImport::TEXTURES)(CImport::SIGNBOARD + data.type), pointType);
 	// データを元に座標の変更
-	pointer->SetPos(data.Index.x * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
+	pointer->SetPos((data.Index.x -(page * 20)) * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
 	// デフォルト位置セット処理
 	pointer->SetDefPos(pointer->GetPos());
-	pointer->SetPosDef((data.Index.x + (page * 20)) * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
 
 	// 障害物タイプによる当たり判定の変更
 	pointer->SetHitSize(Size_List[data.type]);
@@ -112,6 +111,8 @@ CStumbler* CStumbler::Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYP
 	default:
 		break;
 	}
+
+	pointer->SetData(data);
 
 	return pointer;
 }
@@ -154,7 +155,7 @@ void CStumbler::Update(void)
 		// 削除フラグ立てる
 		SetStumDelete();
 	}
-	else
+/*	else
 	{
 		// タイプによって色々処理
 		switch(m_type)
@@ -256,10 +257,12 @@ void CStumbler::Update(void)
 
 		default:
 			break;
-		}
+		
 		// 継承元の更新処理呼び出し
 		CScene2D::Update();
-	}}
+		}
+	}*/
+}
 
 //=============================================================================
 // 描画

@@ -32,8 +32,8 @@ CRoad* CRoad::Create(LPDIRECT3DDEVICE9 device, ROAD_DATA data, POINT_TYPE pointT
 	// データを元に座標の変更
 	pointer->SetSize(ROAD_SIZE, ROAD_SIZE);
 	pointer->SetHitSize(D3DXVECTOR2(ROAD_SIZE, ROAD_SIZE));
-	pointer->SetPos(data.Index.x * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 64));
-	pointer->SetPosDef((data.Index.x + (page * 20)) * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
+	pointer->SetPos((data.Index.x -(page * 20)) * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 64));
+
 	pointer->SetData(data);
 
 	return pointer;

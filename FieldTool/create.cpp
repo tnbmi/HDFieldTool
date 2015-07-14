@@ -148,19 +148,19 @@ void CCreate::CreateObj(int category, int type, int x, int y)
 		case 0:
 		{
 			// 道生成
-			ROAD_DATA data = {(ROAD_TYPE)type, D3DXVECTOR2((float)x, (float)y)};
+			ROAD_DATA data = {(ROAD_TYPE)type, D3DXVECTOR2((float)x + (m_page * 20), (float)y)};
 			CRoad* road = CRoad::Create(m_device, data, CScene2D::POINT_LEFTTOP, m_page);
 
 			// 重なった道を削除
 			CRoad** roadChk = new CRoad*;
-			if(CListMapData::GridChkRoad(x, y, roadChk))
+			if(CListMapData::GridChkRoad(data.Index.x, data.Index.y, roadChk))
 			{
 				CListMapData::DelRoad(*roadChk);
 			}
 
 			// 重なったターゲットを削除
 			CTarget** targetChk = new CTarget*;
-			if(CListMapData::GridChkTarget(x, y, targetChk))
+			if(CListMapData::GridChkTarget(data.Index.x, data.Index.y, targetChk))
 			{
 				CListMapData::DelTarget(*targetChk);
 			}
@@ -174,19 +174,19 @@ void CCreate::CreateObj(int category, int type, int x, int y)
 		case 1:
 		{
 			// 障害物生成
-			STUM_DATA data = {(STUM_TYPE)type, D3DXVECTOR2((float)x, (float)y)};
+			STUM_DATA data = {(STUM_TYPE)type, D3DXVECTOR2((float)x + (m_page * 20), (float)y)};
 			CStumbler* stum = CStumbler::Create(m_device, data, CScene2D::POINT_LEFTTOP, m_page);
 
 			// 重なった障害物を削除
 			CStumbler** stumChk = new CStumbler*;
-			if(CListMapData::GridChkStum(x, y, stumChk))
+			if(CListMapData::GridChkStum(data.Index.x, data.Index.y, stumChk))
 			{
 				CListMapData::DelStum(*stumChk);
 			}
 
 			// 重なったターゲットを削除
 			CTarget** targetChk = new CTarget*;
-			if(CListMapData::GridChkTarget(x, y, targetChk))
+			if(CListMapData::GridChkTarget(data.Index.x, data.Index.y, targetChk))
 			{
 				CListMapData::DelTarget(*targetChk);
 			}
@@ -200,11 +200,11 @@ void CCreate::CreateObj(int category, int type, int x, int y)
 		case 2:
 		{
 			// ターゲット生成
-			TARGET_DATA data = {(TARGET_TYPE)type, D3DXVECTOR2((float)x, (float)y)};
+			TARGET_DATA data = {(TARGET_TYPE)type, D3DXVECTOR2((float)x + (m_page * 20), (float)y)};
 			CTarget* target = CTarget::Create(m_device, data, CScene2D::POINT_LEFTTOP, m_page);
 
 			// 重なったオブジェクトを削除
-			DeleteObj(x, y);
+			DeleteObj(data.Index.x, data.Index.y);
 
 			// マップデータに追加
 			CListMapData::LinkTarget(target);

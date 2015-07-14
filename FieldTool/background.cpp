@@ -36,7 +36,7 @@ CBackground* CBackground::Create(LPDIRECT3DDEVICE9 device, BG_DATA data, int pag
 
 	pointer->Init(device, (CImport::TEXTURES)(CImport::FOREST_01 + data.type));
 	pointer->SetPos((float)((data.index - page) * SCREEN_WIDTH), 0.0f);
-	pointer->SetPosDef((float)(data.index * SCREEN_WIDTH), 0.0f);
+
 	pointer->SetData(data);
 
 	return pointer;

@@ -68,9 +68,6 @@ public:
 	void		 SetBgPrev(CBackground* prev){m_prev = prev;}
 	CBackground* GetBgPrev(void){return m_prev;}
 
-	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
-	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
-
 	void	SetData(BG_DATA data){m_data = data;}
 	BG_DATA GetData(void){return m_data;}
 

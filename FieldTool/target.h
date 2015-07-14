@@ -63,9 +63,6 @@ public:
 	bool		GetTargetFrag(void){return m_targetFlag;}
 	void		SetTargetFrag(void){m_targetFlag = true;}
 
-	void SetPosDef(D3DXVECTOR2 pos){m_posDef = pos;}
-	void SetPosDef(float x, float y){m_posDef = D3DXVECTOR2(x, y);}
-
 	void		SetData(TARGET_DATA data){m_data = data;}
 	TARGET_DATA GetData(void){return m_data;}
 

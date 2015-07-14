@@ -44,15 +44,14 @@ CTarget* CTarget::Create(LPDIRECT3DDEVICE9 device, TARGET_DATA data, POINT_TYPE 
 	CTarget* pointer = new CTarget;
 	pointer->Init(device, (CImport::TEXTURES)(CImport::GOAL + data.type), pointType);
 	// データを元に座標の変更
-	pointer->SetPos(data.Index.x * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
-	// デフォルト位置セット処理
-	pointer->SetPosDef((data.Index.x + (page * 20)) * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
+	pointer->SetPos((data.Index.x -(page * 20)) * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
 	// ターゲットタイプによる当たり判定の変更
 	pointer->SetHitSize(Size_List[data.type]);
 	pointer->SetHitOffset(Offset_List[data.type]);
 	// 光が収束するのかどうかのフラグ設定
 	if(data.type == TYPE_TARGET_OFF)
 		pointer->SetTargetFrag();
+
 	pointer->SetData(data);
 
 	return pointer;
