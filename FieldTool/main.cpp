@@ -236,14 +236,14 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			ScreenToClient(wnd, &pt);	// ウィンドウ領域座標にする
 
 			// グリッド計算
-			int gridX = pt.x / 64;
-			int gridY = 10 - ((pt.y - 16) / 64);
+			int gridX = pt.x / GRID_SIZE;
+			int gridY = 11 - ((pt.y - (16 * MAG)) / GRID_SIZE);
 			g_manager->SetGrid(gridX, gridY);
 
 			// オブジェクト生成
-			int category = SendMessage(GetDlgItem(g_toolBoxDlgWnd, COMBO_OBJ_CATEGORY), CB_GETCURSEL, 0, 0);
-			int type	 = SendMessage(GetDlgItem(g_toolBoxDlgWnd, COMBO_OBJ_TYPE), CB_GETCURSEL, 0, 0);
-			g_manager->CreateObj(category, type, gridX, gridY);
+			//int category = SendMessage(GetDlgItem(g_toolBoxDlgWnd, COMBO_OBJ_CATEGORY), CB_GETCURSEL, 0, 0);
+			//int type	 = SendMessage(GetDlgItem(g_toolBoxDlgWnd, COMBO_OBJ_TYPE), CB_GETCURSEL, 0, 0);
+			//g_manager->CreateObj(category, type, gridX, gridY);
 			break;
 		}
 
@@ -258,12 +258,12 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			ScreenToClient(wnd, &pt);	// ウィンドウ領域座標にする
 
 			// グリッド計算
-			int gridX = pt.x / 64;
-			int gridY = 10 - ((pt.y - 16) / 64);
+			int gridX = pt.x / GRID_SIZE;
+			int gridY = 11 - ((pt.y - (16 * MAG)) / GRID_SIZE);
 			g_manager->SetGrid(gridX, gridY);
 
 			// オブジェクト生成
-			g_manager->DeleteObj(gridX, gridY);
+			//g_manager->DeleteObj(gridX, gridY);
 			break;
 		}
 

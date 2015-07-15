@@ -10,7 +10,7 @@
 //=============================================================================
 #include "road.h"
 
-#define ROAD_SIZE	(64.0f)
+#define ROAD_SIZE	(GRID_SIZE)
 
 //=============================================================================
 // コンストラクタ
@@ -32,7 +32,7 @@ CRoad* CRoad::Create(LPDIRECT3DDEVICE9 device, ROAD_DATA data, POINT_TYPE pointT
 	// データを元に座標の変更
 	pointer->SetSize(ROAD_SIZE, ROAD_SIZE);
 	pointer->SetHitSize(D3DXVECTOR2(ROAD_SIZE, ROAD_SIZE));
-	pointer->SetPos((data.Index.x -(page * 20)) * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 64));
+	pointer->SetPos((data.Index.x -(page * 20)) * GRID_SIZE, SCREEN_HEIGHT - ((data.Index.y * GRID_SIZE) + GRID_SIZE));
 
 	pointer->SetData(data);
 

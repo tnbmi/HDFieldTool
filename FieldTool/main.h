@@ -55,8 +55,10 @@
 //----------------------------
 // 画面サイズ
 //----------------------------
-#define SCREEN_WIDTH	(1280)	// ウインドウの幅
-#define SCREEN_HEIGHT	(720)	// ウインドウの高さ
+#define MAG				(0.5f)	// 拡大倍率
+#define SCREEN_WIDTH	(1280 * MAG)	// ウインドウの幅
+#define SCREEN_HEIGHT	(720 * MAG)		// ウインドウの高さ
+#define GRID_SIZE		(64 * MAG)		// グリッドのサイズ
 
 //----------------------------
 // 分岐マクロ

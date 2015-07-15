@@ -28,23 +28,23 @@ CTarget* CTarget::Create(LPDIRECT3DDEVICE9 device, TARGET_DATA data, POINT_TYPE 
 	// 当たり判定大きさリスト
 	D3DXVECTOR2 Size_List[] =
 	{
-		D3DXVECTOR2(32, SCREEN_HEIGHT),		// GOAL_OFF
-		D3DXVECTOR2(32, SCREEN_HEIGHT),		// GOAL_ON
-		D3DXVECTOR2(32, SCREEN_HEIGHT)		// GOAL_CLEAR
+		D3DXVECTOR2(GRID_SIZE, SCREEN_HEIGHT),		// GOAL_OFF
+		D3DXVECTOR2(GRID_SIZE, SCREEN_HEIGHT),		// GOAL_ON
+		D3DXVECTOR2(GRID_SIZE, SCREEN_HEIGHT)		// GOAL_CLEAR
 	};
 
 	// 当たり判定座標オフセット値リスト
 	D3DXVECTOR2 Offset_List[] =
 	{
-		D3DXVECTOR2(0.0f, -232.0f),			// GOAL_OFF
-		D3DXVECTOR2(0.0f, -232.0f),			// GOAL_ON
-		D3DXVECTOR2(0.0f, -232.0f)			// GOAL_CLEAR
+		D3DXVECTOR2(0.0f, -232.0f * MAG),			// GOAL_OFF
+		D3DXVECTOR2(0.0f, -232.0f * MAG),			// GOAL_ON
+		D3DXVECTOR2(0.0f, -232.0f * MAG)			// GOAL_CLEAR
 	};
 
 	CTarget* pointer = new CTarget;
 	pointer->Init(device, (CImport::TEXTURES)(CImport::GOAL + data.type), pointType);
 	// データを元に座標の変更
-	pointer->SetPos((data.Index.x -(page * 20)) * 64, SCREEN_HEIGHT - ((data.Index.y * 64) + 128));
+	pointer->SetPos((data.Index.x -(page * 20)) * GRID_SIZE, SCREEN_HEIGHT - ((data.Index.y * GRID_SIZE) + (GRID_SIZE * 2)));
 	// ターゲットタイプによる当たり判定の変更
 	pointer->SetHitSize(Size_List[data.type]);
 	pointer->SetHitOffset(Offset_List[data.type]);
@@ -102,5 +102,5 @@ void CTarget::Draw(void)
 	CScene2D::Draw();
 
 	// 当たり判定ボックスの描画
-	DrawHitBox();
+	//DrawHitBox();
 }
