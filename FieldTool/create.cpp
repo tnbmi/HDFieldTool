@@ -224,7 +224,7 @@ void CCreate::CreateObj(int category, int type, int x, int y)
 void CCreate::DeleteObj(int x, int y)
 {
 	CScene2D** obj = new CScene2D*;
-	int category = CListMapData::GridChk(x, y, obj);
+	int category = CListMapData::GridChk(x + (m_page * 20), y, obj);
 
 	switch(category)
 	{
