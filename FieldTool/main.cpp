@@ -241,9 +241,9 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			g_manager->SetGrid(gridX, gridY);
 
 			// オブジェクト生成
-			//int category = SendMessage(GetDlgItem(g_toolBoxDlgWnd, COMBO_OBJ_CATEGORY), CB_GETCURSEL, 0, 0);
-			//int type	 = SendMessage(GetDlgItem(g_toolBoxDlgWnd, COMBO_OBJ_TYPE), CB_GETCURSEL, 0, 0);
-			//g_manager->CreateObj(category, type, gridX, gridY);
+			int category = SendMessage(GetDlgItem(g_toolBoxDlgWnd, COMBO_OBJ_CATEGORY), CB_GETCURSEL, 0, 0);
+			int type	 = SendMessage(GetDlgItem(g_toolBoxDlgWnd, COMBO_OBJ_TYPE), CB_GETCURSEL, 0, 0);
+			g_manager->CreateObj(category, type, gridX, gridY);
 			break;
 		}
 
@@ -263,7 +263,7 @@ LRESULT CALLBACK WndProc(HWND wnd, UINT msg, WPARAM wParam, LPARAM lParam)
 			g_manager->SetGrid(gridX, gridY);
 
 			// オブジェクト生成
-			//g_manager->DeleteObj(gridX, gridY);
+			g_manager->DeleteObj(gridX, gridY);
 			break;
 		}
 
