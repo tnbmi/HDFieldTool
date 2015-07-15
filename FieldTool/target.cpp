@@ -52,6 +52,7 @@ CTarget* CTarget::Create(LPDIRECT3DDEVICE9 device, TARGET_DATA data, POINT_TYPE 
 	if(data.type == TYPE_TARGET_OFF)
 		pointer->SetTargetFrag();
 
+	pointer->SetSize(GRID_SIZE * 2, GRID_SIZE * 2);
 	pointer->SetData(data);
 
 	return pointer;

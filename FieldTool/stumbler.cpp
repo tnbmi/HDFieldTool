@@ -112,6 +112,7 @@ CStumbler* CStumbler::Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYP
 		break;
 	}
 
+	pointer->SetSize(GRID_SIZE * 2, GRID_SIZE * 2);
 	pointer->SetData(data);
 
 	return pointer;

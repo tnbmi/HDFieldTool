@@ -64,12 +64,14 @@ public:
 	static bool	GridChkStum(int x, int y, CStumbler** obj);
 	static bool	GridChkTarget(int x, int y, CTarget** obj);
 
-
 	// ファイル処理
 	static void LoadMap(CManager* manager, const char* filePath, const char* fileName);
 	static void SaveMap(const char* filePath, const char* fileName);
 
 private:
+	// マップデータ削除
+	static void ReleaseAll(void);
+
 	// 背景
 	static CBackground* m_topBg;	// 先頭ポインタ
 	static CBackground* m_curBg;	// 現在終端ポインタ

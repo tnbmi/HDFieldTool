@@ -670,8 +670,18 @@ void CListMapData::LoadMap(CManager* manager, const char* filePath, const char* 
 	}
 
 	//----------------------------
+	// 現在のデータを削除
+	//----------------------------
+	ReleaseAll();
+
+/*	//----------------------------
 	// データ数取得
 	//----------------------------
+	int numBg		= 0;
+	int numRoad		= 0;
+	int numStum		= 0;
+	int numTarget	= 0;
+
 	fseek(fp, 0, SEEK_SET);
 	while((c = fgetc(fp)) != EOF)
 	{
@@ -679,10 +689,10 @@ void CListMapData::LoadMap(CManager* manager, const char* filePath, const char* 
 		{
 			fscanf(fp,
 					"%d %d %d %d",
-					&m_numBg, &m_numRoad, &m_numStum, &m_numTarget);
+					&numBg, &numRoad, &numStum, &numTarget);
 		}
 	}
-
+*/
 	//----------------------------
 	// 背景データ取得
 	//----------------------------
@@ -903,4 +913,37 @@ void CListMapData::SaveMap(const char* filePath, const char* fileName)
 	//ファイルを閉じる
 	//----------------------------
 	fclose(fp);
+}
+
+//=============================================================================
+// マップデータ削除
+//=============================================================================
+void CListMapData::ReleaseAll(void)
+{
+	// 背景
+	for(unsigned int cnt = 0; cnt < m_numBg; ++cnt)
+	{
+		DelBg(cnt);
+	}
+
+	// 道
+	CRoad* road = m_topRoad;
+	while(road)
+	{
+		DelRoad(road);
+	}
+
+	// 障害物
+	CStumbler* stum = m_topStum;
+	while(stum)
+	{
+		DelStum(stum);
+	}
+
+	// ターゲット
+	CTarget* target = m_topTarget;
+	while(target)
+	{
+		DelTarget(target);
+	}
 }
