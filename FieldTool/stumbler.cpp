@@ -86,6 +86,8 @@ CStumbler* CStumbler::Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYP
 	// 障害物タイプの保存
 	pointer->SetStumType(data.type);
 
+	pointer->SetSize(GRID_SIZE * 2, GRID_SIZE * 2);
+
 	// 障害物タイプによってはデータの変更
 	switch(data.type)
 	{
@@ -97,7 +99,7 @@ CStumbler* CStumbler::Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYP
 		break;
 
 	case TYPE_BARRICADE:
-		pointer->SetSize(256.0f, 128.0f);
+		pointer->SetSize(256.0f * MAG, 128.0f * MAG);
 		break;
 
 	case TYPE_BEE:
@@ -112,7 +114,6 @@ CStumbler* CStumbler::Create(LPDIRECT3DDEVICE9 device, STUM_DATA data, POINT_TYP
 		break;
 	}
 
-	pointer->SetSize(GRID_SIZE * 2, GRID_SIZE * 2);
 	pointer->SetData(data);
 
 	return pointer;
