@@ -59,6 +59,7 @@ const char* TYPE_SRUMBLER[] =
 	"SANDSTONE",
 	"BEE",
 	"HUNEYCOMB",
+	"SUMP"
 };
 
 // ターゲット

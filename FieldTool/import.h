@@ -82,6 +82,7 @@ public:
 		SANDSTONE,
 		BEE,
 		HUNEYCOMB,
+		STUMP,
 
 		// ターゲット
 		GOAL,
